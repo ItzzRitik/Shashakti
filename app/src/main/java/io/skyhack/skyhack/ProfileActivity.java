@@ -370,15 +370,15 @@ public class ProfileActivity extends AppCompatActivity {
         inter.addChip("Farming");
         inter.addChip("Dairy");
         inter.addChip("Livestock");
-        inter.addChip("Engineering");
         inter.addChip("Sports");
+        inter.addChip("Engineering");
         inter.addChip("Transportation");
+        inter.addChip("Banking");
         inter.addChip("IT Services");
         inter.addChip("Manufacturing");
-        inter.addChip("Construction");
         inter.addChip("Education");
+        inter.addChip("Construction");
         inter.addChip("Health Care");
-        inter.addChip("Banking");
         inter.addChip("Armed Forces");
 
         new Handler().postDelayed(new Runnable() {
