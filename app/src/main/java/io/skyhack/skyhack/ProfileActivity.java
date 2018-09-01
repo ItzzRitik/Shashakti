@@ -62,6 +62,7 @@ import java.util.Objects;
 
 import fisk.chipcloud.ChipCloud;
 import fisk.chipcloud.ChipCloudConfig;
+import fisk.chipcloud.ChipListener;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -97,6 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
     FlexboxLayout interest;
     ChipCloud inter;
     OkHttpClient client;
+    boolean tags[]={false,false,false,false,false,false,false,false,false,false,false,false,false};
     int interestX=0;
     @Override
     protected void onPause() {
@@ -370,7 +372,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         interest = findViewById(R.id.interest);
         interest.setVisibility(View.GONE);
-
         ChipCloudConfig config = new ChipCloudConfig()
                 .selectMode(ChipCloud.SelectMode.multi)
                 .checkedChipColor(getResources().getColor(R.color.colorAccent))
@@ -393,6 +394,14 @@ public class ProfileActivity extends AppCompatActivity {
         inter.addChip("Construction");
         inter.addChip("Health Care");
         inter.addChip("Armed Forces");
+        inter.setListener(new ChipListener() {
+            @Override
+            public void chipCheckedChange(int i, boolean b, boolean b1) {
+                tags[i]=b;
+                Log.i("sign",b+" , "+b1);
+            }
+        });
+
 
         new Handler().postDelayed(new Runnable() {
             @Override
