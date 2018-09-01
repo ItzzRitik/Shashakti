@@ -402,7 +402,8 @@ public class LoginActivity extends AppCompatActivity {
                                 new Handler().postDelayed(new Runnable() {@Override public void run() {
                                     newPageAnim();nextLoading(false);}},1500);
                                 new Handler().postDelayed(new Runnable() {@Override public void run() {
-                                    LoginActivity.this.startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                    Intent home=new Intent(LoginActivity.this, HomeActivity.class);
+                                    LoginActivity.this.startActivity(home);
                                     finish();
                                     LoginActivity.this.overridePendingTransition(0, 0);}},2500);
                             }
@@ -448,7 +449,9 @@ public class LoginActivity extends AppCompatActivity {
                                 newPageAnim();
                                 nextLoading(false);
                                 new Handler().postDelayed(new Runnable() {@Override public void run() {
-                                    LoginActivity.this.startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                                    Intent profile = new Intent(LoginActivity.this, ProfileActivity.class);
+                                    profile.putExtra("email",email.getText().toString());
+                                    LoginActivity.this.startActivity(profile);
                                     finish();
                                     LoginActivity.this.overridePendingTransition(0, 0);}},1500);
                             }

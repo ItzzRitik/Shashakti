@@ -440,9 +440,13 @@ public class ProfileActivity extends AppCompatActivity {
     }
     public void createProfile(){
         RequestBody postBody = new FormBody.Builder()
-                .add("email", email.getText().toString())
-                .add("firstname", f_name.getText().toString())
-                .add("lastname", l_name.getText().toString()).build();
+                .add("email", getIntent().getStringExtra("email")+"")
+                .add("firstname", f_name.getText().toString()+"")
+                .add("lastname", l_name.getText().toString()+"")
+                .add("gender", l_name.getText().toString()+"")
+                .add("dob", l_name.getText().toString()+"")
+                .add("aadhaar", l_name.getText().toString()+"")
+                .add("occupation", l_name.getText().toString()+"").build();
         Log.i("sign",postBody.toString());
         Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/tempsignup").post(postBody).build();
         client.newCall(request).enqueue(new Callback() {
