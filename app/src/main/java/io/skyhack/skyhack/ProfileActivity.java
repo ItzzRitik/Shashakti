@@ -398,7 +398,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void chipCheckedChange(int i, boolean b, boolean b1) {
                 tags[i]=b;
-                Log.i("sign",b+" , "+b1);
             }
         });
 
@@ -456,6 +455,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .add("dob", l_name.getText().toString()+"")
                 .add("aadhaar", l_name.getText().toString()+"")
                 .add("occupation", l_name.getText().toString()+"").build();
+
         Log.i("sign",postBody.toString());
         Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/tempsignup").post(postBody).build();
         client.newCall(request).enqueue(new Callback() {
