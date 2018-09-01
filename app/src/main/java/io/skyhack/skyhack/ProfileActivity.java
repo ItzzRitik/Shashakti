@@ -569,7 +569,7 @@ public class ProfileActivity extends AppCompatActivity {
                 try {
                     final Uri resultUri = UCrop.getOutput(intent);
                     Bitmap bitmap= MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), resultUri);
-                    profile.setImageBitmap(bitmap);profile_dp=bitmap;isDP_added=true;
+                    profile.setImageBitmap(bitmap);dp_cover.setImageBitmap(bitmap);profile_dp=bitmap;isDP_added=true;
                     closeCam();
                     new Handler().postDelayed(new Runnable() {@Override public void run()
                     {
@@ -594,7 +594,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
     public void closeCam()
     {
-        int cy=(int)(profile.getY() + profile.getHeight() / 2);
+        int cy=(int)(profile.getY()+profile.getHeight()/2);
         Animation anim = AnimationUtils.loadAnimation(ProfileActivity.this, R.anim.click_shrink);click.startAnimation(anim);
         animator = ViewAnimationUtils.createCircularReveal(camera_pane,ico_splash.getRight()/2,cy, ico_splash.getHeight()*141/100,0);
         animator.setInterpolator(new DecelerateInterpolator());animator.setDuration(500);
