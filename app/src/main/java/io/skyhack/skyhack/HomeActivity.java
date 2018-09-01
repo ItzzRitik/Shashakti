@@ -257,7 +257,6 @@ public class HomeActivity extends AppCompatActivity {
                         JSONArray postsArray = new JSONArray(mMessage);
                         for (int i = 0; i < postsArray.length(); i++) {
                             JSONObject pO = postsArray.getJSONObject(i);
-                            if((schemes.get(0).getTitle()).equals(pO.getString("name"))){break;}
                             schemes.add(new Schemes(pO.getString("name"), pO.getString("endDate"),pO.getString("description"),
                                     BitmapFactory.decodeResource(getResources(), R.mipmap.msasy)));
                         }

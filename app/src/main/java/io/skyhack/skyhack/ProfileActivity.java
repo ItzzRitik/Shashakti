@@ -98,7 +98,8 @@ public class ProfileActivity extends AppCompatActivity {
     FlexboxLayout interest;
     ChipCloud inter;
     OkHttpClient client;
-    boolean tags[]={false,false,false,false,false,false,false,false,false,false,false,false,false};
+    boolean tags[]={false,false,false,false,false,false,false,false,false
+            ,false,false,false,false,false,false,false,false,false,false,false};
     int interestX=0;
     @Override
     protected void onPause() {
@@ -382,12 +383,19 @@ public class ProfileActivity extends AppCompatActivity {
         inter.addChip("Engineering");
         inter.addChip("Transportation");
         inter.addChip("Banking");
+        inter.addChip("Water");
+        inter.addChip("Land");
+        inter.addChip("Sanitation");
         inter.addChip("IT Services");
         inter.addChip("Manufacturing");
         inter.addChip("Education");
+        inter.addChip("Revenue");
         inter.addChip("Construction");
         inter.addChip("Health Care");
+        inter.addChip("Housing");
         inter.addChip("Armed Forces");
+        inter.addChip("Legal Aid");
+        inter.addChip("Electricity");
         inter.setListener(new ChipListener() {
             @Override
             public void chipCheckedChange(int i, boolean b, boolean b1) {
