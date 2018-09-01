@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ff611c</color>
+    <color name="colorPrimaryDark">#ff611c</color>
+    <color name="colorAccent">#ff611c</color>
+    <color name="splash">#99ff611c</color>
+    <color name="ripple">#ff8b59</color>
+
+    <color name="colorPrimary1">#02723b</color>
+    <color name="colorPrimaryDark1">#00582c</color>
+    <color name="colorAccent1">#02723B</color>
+    <color name="splash1">#9b02723b</color>
+    <color name="ripple1">#3b9e6d</color>
+
+    <color name="colorPrimary2">#ff611c</color>
+    <color name="colorPrimaryDark2">#ff611c</color>
+    <color name="colorAccent2">#ff611c</color>
+    <color name="splash2">#99ff611c</color>
+    <color name="ripple2">#ff8b59</color>
+
+    <color name="transparent">#0000</color>
+    <color name="disabled">#c1c1c1</color>
+    <color name="profile">#6c6c6c</color>
+    <color name="profile_text">#d3d3d3</color>
+    <color name="profile_back">#82ffffff</color>
+    <color name="gender_back">#d1d1d1</color>
+    <color name="gender_male">@color/colorPrimary</color>
+    <color name="gender_female">#ff697f</color>
+    <color name="progress">#ffffff</color>
+</resources>
