@@ -447,17 +447,24 @@ public class ProfileActivity extends AppCompatActivity {
             }},1500);
     }
     public void createProfile(){
-        RequestBody postBody = new FormBody.Builder()
+        int tag=0;
+        FormBody.Builder postBody = new FormBody.Builder()
                 .add("email", getIntent().getStringExtra("email")+"")
                 .add("firstname", f_name.getText().toString()+"")
                 .add("lastname", l_name.getText().toString()+"")
                 .add("gender", l_name.getText().toString()+"")
                 .add("dob", l_name.getText().toString()+"")
                 .add("aadhaar", l_name.getText().toString()+"")
-                .add("occupation", l_name.getText().toString()+"").build();
+                .add("occupation", l_name.getText().toString()+"");
+        for(int i=0;i<tags.length;i++){
+            if(tags[i])
+            postBody.add("tags["+(tag++)+"]", ""+inter.getLabel(i));
+        }
+        RequestBody formBody = postBody.build();
+
 
         Log.i("sign",postBody.toString());
-        Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/tempsignup").post(postBody).build();
+        Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/tempsignup").post(formBody).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
