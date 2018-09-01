@@ -3,10 +3,13 @@ package io.skyhack.skyhack;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -34,8 +37,20 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
     Animation anim;
@@ -45,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText email,pass,con_pass;
     int log=0;
     String buttonText="NEXT";
+    OkHttpClient client;
     ProgressBar nextLoad;
     @Override
     public void onBackPressed() {
@@ -63,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         logo_div=findViewById(R.id.logo_div);
         login_div=findViewById(R.id.login_div);
         social_div=findViewById(R.id.social_div);
+        client = new OkHttpClient();
 
         forget_create=findViewById(R.id.forget_create);
         forget_create.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
@@ -284,60 +301,105 @@ public class LoginActivity extends AppCompatActivity {
     {
         if(log==0)
         {
-            //Check server for existing account
-            if((Math.random() <= 0.5))
-            {
-                //If Exists then ask password
-                Log.e("", "SignIN");
-                nextLoading(true);
-                new Handler().postDelayed(new Runnable() {@Override public void run() {
-                    scaleY(social_div,0,300,new AccelerateDecelerateInterpolator());
-                    login_div.setPadding(0,0,0,0);
-                    nextPad(8,4);
-                    nextLoading(false);
+            nextLoading(true);
+            HttpUrl.Builder urlBuilder = HttpUrl.parse("https://nodeexercise-adityabhardwaj.c9users.io/check").newBuilder();
+            urlBuilder.addQueryParameter("email", email.getText().toString());
+            Request request = new Request.Builder().url(urlBuilder.build().toString()).get()
+                    .addHeader("Content-Type", "text/html").build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    Log.w("failure", e.getMessage());
+                    call.cancel();
+                }
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    assert response.body() != null;
+                    String signVal = Objects.requireNonNull(response.body()).string();
+                    Log.w("signVal", signVal);
+                    if(Integer.parseInt(signVal)==1)
+                    {
+                        //If Exists then ask password
+                        Log.e("", "SignIN");
+                        Handler mainHandler = new Handler(Looper.getMainLooper());
+                        Runnable myRunnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                new Handler().postDelayed(new Runnable() {@Override public void run() {
+                                    scaleY(social_div,0,300,new AccelerateDecelerateInterpolator());
+                                    login_div.setPadding(0,0,0,0);
+                                    nextPad(8,4);
+                                    nextLoading(false);
+                                    //Ask Password
+                                    pass.setVisibility(View.VISIBLE);
+                                    con_pass.setVisibility(View.GONE);
+                                    email_reset.setVisibility(View.VISIBLE);
+                                    pass.requestFocus();
+                                    pass.setEnabled(true);
+                                    setButtonEnabled(false);
+                                    forget_create.setTextSize(13);
+                                    forget_create.setText(getResources().getString(R.string.forgot_pass));
+                                    scaleY(forget_pass,27,300,new OvershootInterpolator());
+                                    scaleY(login_div,98,300,new AccelerateDecelerateInterpolator());
+                                    log=1;
+                                }},1500);
+                            }
+                        };
+                        mainHandler.post(myRunnable);
+                    }
+                    else
+                    {
+                        //If Doesn't exist then ask signup
+                        Log.e("", "SignUP");
+                        Handler mainHandler = new Handler(Looper.getMainLooper());
+                        Runnable myRunnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                new Handler().postDelayed(new Runnable() {@Override public void run() {
+                                    scaleY(social_div,0,300,new AccelerateDecelerateInterpolator());
+                                    login_div.setPadding(0,0,0,0);
+                                    nextPad(8,4);
+                                    nextLoading(false);
 
-                    //Ask Password
-                    pass.setVisibility(View.VISIBLE);
-                    con_pass.setVisibility(View.GONE);
-                    email_reset.setVisibility(View.VISIBLE);
-                    pass.requestFocus();
-                    pass.setEnabled(true);
-                    setButtonEnabled(false);
-                    forget_create.setTextSize(13);
-                    forget_create.setText(getResources().getString(R.string.forgot_pass));
-                    scaleY(forget_pass,27,300,new OvershootInterpolator());
-                    scaleY(login_div,98,300,new AccelerateDecelerateInterpolator());
-                    log=1;
-                }},1500);
-            }
-            else
-            {
-                //If Doesn't exist then ask signup
-                Log.e("", "SignUP");
-                nextLoading(true);
-                new Handler().postDelayed(new Runnable() {@Override public void run() {
-                    scaleY(social_div,0,300,new AccelerateDecelerateInterpolator());
-                    login_div.setPadding(0,0,0,0);
-                    nextPad(8,4);
-                    nextLoading(false);
-
-                    //Ask SignUp Details
-                    pass.setVisibility(View.VISIBLE);
-                    con_pass.setVisibility(View.VISIBLE);
-                    email_reset.setVisibility(View.VISIBLE);
-                    pass.requestFocus();
-                    pass.setEnabled(true);
-                    setButtonEnabled(false);
-                    forget_create.setTextSize(14);
-                    forget_create.setText(getResources().getString(R.string.login_create));
-                    scaleY(forget_pass,30,300,new OvershootInterpolator());
-                    scaleY(login_div,148,300,new AccelerateDecelerateInterpolator());
-                    log=2;
-                }},1500);
-            }
+                                    //Ask SignUp Details
+                                    pass.setVisibility(View.VISIBLE);
+                                    con_pass.setVisibility(View.VISIBLE);
+                                    email_reset.setVisibility(View.VISIBLE);
+                                    pass.requestFocus();
+                                    pass.setEnabled(true);
+                                    setButtonEnabled(false);
+                                    forget_create.setTextSize(14);
+                                    forget_create.setText(getResources().getString(R.string.login_create));
+                                    scaleY(forget_pass,30,300,new OvershootInterpolator());
+                                    scaleY(login_div,148,300,new AccelerateDecelerateInterpolator());
+                                    log=2;
+                                }},1500);
+                            }
+                        };
+                        mainHandler.post(myRunnable);
+                    }
+                }
+            });
         }
         else if(log==1)
         {
+            Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/schemes").get()
+                    .addHeader("Content-Type", "application/json").build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    Log.w("failure", e.getMessage());
+                    call.cancel();
+                }
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    assert response.body() != null;
+                    String mMessage = Objects.requireNonNull(response.body()).string();
+                    if (response.isSuccessful()){
+                        
+                    }
+                }
+            });
             //SignIn Initiate
             nextLoading(true);
             new Handler().postDelayed(new Runnable() {@Override public void run() {
