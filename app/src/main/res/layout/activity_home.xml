@@ -49,19 +49,24 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="-5dp"
             android:paddingBottom="5dp">
-            <android.support.v7.widget.RecyclerView
+            <android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                android:visibility="gone"
-                android:id="@+id/display">
-            </android.support.v7.widget.RecyclerView>
-            <WebView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/apply"
-                android:visibility="gone">
-            </WebView>
+                android:id="@+id/refresh">
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical"
+                    android:visibility="gone"
+                    android:id="@+id/display">
+                </android.support.v7.widget.RecyclerView>
+                <WebView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/apply"
+                    android:visibility="gone">
+                </WebView>
+            </android.support.v4.widget.SwipeRefreshLayout>
         </android.support.v7.widget.CardView>
         <ImageView
             android:layout_width="25dp"
