@@ -317,7 +317,7 @@ public class LoginActivity extends AppCompatActivity {
                     assert response.body() != null;
                     String signVal = Objects.requireNonNull(response.body()).string();
                     Log.w("signVal", signVal);
-                    if(Integer.parseInt(signVal)==1)
+                    if(Integer.parseInt(signVal)==1 && response.isSuccessful())
                     {
                         //If Exists then ask password
                         Log.e("", "SignIN");
@@ -383,7 +383,10 @@ public class LoginActivity extends AppCompatActivity {
         }
         else if(log==1)
         {
-            Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/schemes").get()
+            HttpUrl.Builder urlBuilder = HttpUrl.parse("https://nodeexercise-adityabhardwaj.c9users.io/login").newBuilder();
+            urlBuilder.addQueryParameter("email", email.getText().toString());
+            urlBuilder.addQueryParameter("password", pass.getText().toString());
+            Request request = new Request.Builder().url(urlBuilder.build().toString()).get()
                     .addHeader("Content-Type", "application/json").build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
@@ -396,7 +399,7 @@ public class LoginActivity extends AppCompatActivity {
                     assert response.body() != null;
                     String mMessage = Objects.requireNonNull(response.body()).string();
                     if (response.isSuccessful()){
-                        
+
                     }
                 }
             });
