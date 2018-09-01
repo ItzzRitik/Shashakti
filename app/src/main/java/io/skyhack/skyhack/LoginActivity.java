@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -425,14 +426,13 @@ public class LoginActivity extends AppCompatActivity {
         {
             //SignUp Initiate
             Log.i("sign", "SignUp Initiate");
-            String postBody="{\n" +
-                    "\"email\": \""+email.getText()+"\",\n" +
-                    "\"password\": \""+con_pass.getText()+"\"\n" +
-                    "}";
-            Log.i("sign",postBody);
+            RequestBody postBody = new FormBody.Builder()
+                    .add("email", email.getText().toString())
+                    .add("password", con_pass.getText().toString())
+                    .build();
+            Log.i("sign",postBody.toString());
             Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/tempsignup")
-                    .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"), postBody))
-                    .addHeader("Content-Type", "application/x-www-form-urlencoded").build();
+                    .post(postBody).build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -442,7 +442,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     assert response.body() != null;
-                    if(Integer.parseInt(Objects.requireNonNull(response.body()).string())==1){
+                    if(Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful()){
                         Log.i("sign","Account Creation Successful");
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
