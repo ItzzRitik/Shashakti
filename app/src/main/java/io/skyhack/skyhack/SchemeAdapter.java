@@ -21,8 +21,7 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
     private List<Schemes> schemes;
     private HomeActivity homeActivity;
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        TextView last_date;
+        TextView title,last_date,views;
         ImageView thumbnail;
         MyViewHolder(View view) {
             super(view);

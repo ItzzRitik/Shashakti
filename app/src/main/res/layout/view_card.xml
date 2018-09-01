@@ -47,16 +47,20 @@
                 android:layout_marginBottom="0dp"/>
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/views"
-                    android:text="9999"/>
+                    android:text="9999"
+                    android:layout_alignParentEnd="true"/>
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src=""/>
+                    android:src="@drawable/eye"
+                    android:layout_alignStart="@+id/views"/>
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
