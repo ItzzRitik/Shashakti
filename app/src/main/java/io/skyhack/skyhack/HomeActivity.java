@@ -239,8 +239,10 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
     public void prepareSchemes(){
+        String email="aditya.aastha@gmail.com";
+        if(getIntent().getStringExtra("email")!=null){email=getIntent().getStringExtra("email");}
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://nodeexercise-adityabhardwaj.c9users.io/schemes").newBuilder();
-        urlBuilder.addQueryParameter("email", getIntent().getStringExtra("email"));
+        urlBuilder.addQueryParameter("email",email);
         Request request = new Request.Builder().url(urlBuilder.build().toString()).get()
                 .addHeader("Content-Type", "application/json").build();
         client.newCall(request).enqueue(new Callback() {

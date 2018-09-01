@@ -481,6 +481,7 @@ public class ProfileActivity extends AppCompatActivity {
                     home.putExtra("isProfile",true);
                     home.putExtra("divHeight",pxtodp(data_div.getHeight()));
                     home.putExtra("email",ProfileActivity.this.getIntent().getStringExtra("email"));
+                    home.putExtra("aadhaar",aadhaar.getText().toString());
                     ProfileActivity.this.startActivity(home);
                     finish();
                     ProfileActivity.this.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
