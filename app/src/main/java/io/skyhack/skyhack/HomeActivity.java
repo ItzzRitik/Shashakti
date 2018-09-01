@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.http.SslError;
 import android.os.Build;
@@ -27,19 +26,17 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Interpolator;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ramotion.foldingcell.FoldingCell;
 import com.tomergoldst.tooltips.ToolTipsManager;
 
 import java.util.ArrayList;
@@ -55,9 +52,8 @@ public class HomeActivity extends AppCompatActivity {
     ObjectAnimator startAnim;
     Point screenSize;
     ToolTipsManager toolTip;
-    ListView display;
+    RecyclerView display;
     List<Schemes> schemes;
-    SchemeAdapter adapter;
     WebView apply;
     double diagonal;
     @Override
@@ -97,22 +93,9 @@ public class HomeActivity extends AppCompatActivity {
 
         schemes = new ArrayList<>();
         prepareSchemes();
-        schemes.get(0).setRequestBtnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "CUSTOM HANDLER FOR FIRST BUTTON", Toast.LENGTH_SHORT).show();
-            }
-        });
-        adapter = new SchemeAdapter(this,schemes);
         display=findViewById(R.id.display);
-        display.setAdapter(adapter);
-        display.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                ((FoldingCell) view).toggle(false);
-                adapter.registerToggle(pos);
-            }
-        });
+        display.setAdapter(new SchemeAdapter(schemes));
+
 
         apply=findViewById(R.id.apply);
         WebSettings settings = apply.getSettings();
