@@ -5,6 +5,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -262,6 +263,8 @@ public class ProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
+        profile_url=new File(new ContextWrapper(getApplicationContext()).getDir("imageDir", Context.MODE_PRIVATE),"profile.jpg").getAbsolutePath();
+
 
         options=new UCrop.Options();
         options.setCircleDimmedLayer(true);
@@ -566,10 +569,11 @@ public class ProfileActivity extends AppCompatActivity {
                 try {
                     final Uri resultUri = UCrop.getOutput(intent);
                     Bitmap bitmap= MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), resultUri);
-                    profile.setImageBitmap(bitmap);dp_cover.setImageBitmap(bitmap);profile_dp=bitmap;isDP_added=true;closeCam();
+                    profile.setImageBitmap(bitmap);profile_dp=bitmap;isDP_added=true;
+                    closeCam();
                     new Handler().postDelayed(new Runnable() {@Override public void run()
                     {
-                        ToolTip.Builder builder = new ToolTip.Builder(ProfileActivity.this, profile,data_div, getString(R.string.remove_pic), ToolTip.POSITION_ABOVE);
+                        ToolTip.Builder builder = new ToolTip.Builder(ProfileActivity.this, profile,profile_menu_cov, getString(R.string.remove_pic), ToolTip.POSITION_ABOVE);
                         builder.setBackgroundColor(getResources().getColor(R.color.profile));
                         builder.setTextColor(getResources().getColor(R.color.profile_text));
                         builder.setGravity(ToolTip.GRAVITY_CENTER);
@@ -583,7 +587,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
             else if (resultcode == UCrop.RESULT_ERROR) {
                 final Throwable cropError = UCrop.getError(intent);
-                Log.e("crop", getString(R.string.error)+cropError);
+                Toast.makeText(ProfileActivity.this,getString(R.string.error)+cropError, Toast.LENGTH_LONG).show();
                 new File(getRealPathFromURI(ProfileActivity.this,Uri.parse(profile_path))).delete();
             }
         }
