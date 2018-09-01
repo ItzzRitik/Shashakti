@@ -47,6 +47,7 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
         Schemes scheme = schemes.get(position);
         holder.title.setText(scheme.getTitle());
         holder.last_date.setText(daysLeft(scheme.getDate()));
+        holder.views.setText(scheme.getViews());
         Picasso.get().load(scheme.getThumbnail()).into(holder.thumbnail);
     }
     @Override
