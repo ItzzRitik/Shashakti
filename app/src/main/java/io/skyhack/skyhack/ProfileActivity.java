@@ -289,12 +289,9 @@ public class ProfileActivity extends AppCompatActivity {
         cameraView.setOnPictureTakenListener(new CameraViewImpl.OnPictureTakenListener() {
             @Override
             public void onPictureTaken(Bitmap result, int rotationDegrees) {
-                if(cameraView.getFacing()!= CameraView.FACING_BACK)
-                {
-                    Matrix matrix = new Matrix();
-                    matrix.postScale(-1, 1,result.getWidth()/2, result.getHeight()/2);
-                    result= Bitmap.createBitmap(result, 0, 0, result.getWidth(), result.getHeight(), matrix, true);
-                }
+                Matrix matrix = new Matrix();
+                matrix.postRotate(90);
+                result= Bitmap.createBitmap(result, 0, 0, result.getWidth(), result.getHeight(), matrix, true);
                 vibrate(20);
                 profile_path = MediaStore.Images.Media.insertImage(ProfileActivity.this.getContentResolver(), result, "Title", null);
                 UCrop.of(Uri.parse(profile_path),Uri.parse(profile_url)).withOptions(options).withAspectRatio(1,1)
@@ -570,7 +567,7 @@ public class ProfileActivity extends AppCompatActivity {
                 try {
                     final Uri resultUri = UCrop.getOutput(intent);
                     Bitmap bitmap= MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), resultUri);
-                    profile.setImageBitmap(bitmap);profile_dp=bitmap;isDP_added=true;
+                    profile.setImageBitmap(bitmap);profile_dp=bitmap;isDP_added=true;closeCam();
                     closeCam();
                     new Handler().postDelayed(new Runnable() {@Override public void run()
                     {
