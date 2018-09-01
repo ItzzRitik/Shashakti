@@ -14,6 +14,7 @@ import android.graphics.Typeface;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -256,7 +257,12 @@ public class HomeActivity extends AppCompatActivity {
                             JSONObject pO = postsArray.getJSONObject(i);
                             schemes.add(new Schemes(pO.getString("name"),pO.getString("endDate"),pO.getString("description"), BitmapFactory.decodeResource(getResources(), R.mipmap.rbsk)));
                         }
-                        display.setAdapter(new SchemeAdapter(HomeActivity.this,schemes));
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                display.setAdapter(new SchemeAdapter(HomeActivity.this,schemes));
+                            }
+                        });
                     }
                     catch (JSONException e) {
                         Log.w("error", e.toString());

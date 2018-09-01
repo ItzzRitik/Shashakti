@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -299,6 +300,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void performSignIn()
     {
+        showKeyboard(email,false);
         if(log==0)
         {
             nextLoading(true);
@@ -405,6 +407,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else{
                         Log.i("Failed", "Login Failed");
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                nextLoading(false);
+                                pass.setText("");
+                                Toast.makeText(LoginActivity.this, "Invalid Password", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
             });
