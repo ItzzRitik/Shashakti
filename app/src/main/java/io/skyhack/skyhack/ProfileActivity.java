@@ -215,7 +215,7 @@ public class ProfileActivity extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                createProfile();
             }
         });
         profile=findViewById(R.id.profile);
