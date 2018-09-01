@@ -21,7 +21,10 @@
             android:name=".LoginActivity"
             android:theme="@style/Theme1"
             android:windowSoftInputMode="adjustPan|stateHidden">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ProfileActivity"
@@ -31,12 +34,9 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/Theme1"
+            android:theme="@style/Theme2"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

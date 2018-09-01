@@ -15,6 +15,7 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -22,6 +23,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -42,9 +44,20 @@ import android.widget.Toast;
 
 import com.tomergoldst.tooltips.ToolTipsManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class HomeActivity extends AppCompatActivity {
     RelativeLayout logo_div,splash_cover;
@@ -59,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
     List<Schemes> schemes;
     WebView apply;
     double diagonal;
+    OkHttpClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +86,7 @@ public class HomeActivity extends AppCompatActivity {
         logo_div=findViewById(R.id.logo_div);
         data_div=findViewById(R.id.data_div);
         toolTip = new ToolTipsManager();
+        client = new OkHttpClient();
 
         page_tag=findViewById(R.id.page_tag);
         page_tag.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
@@ -101,8 +116,6 @@ public class HomeActivity extends AppCompatActivity {
         display.setLayoutManager(mLayoutManager);
         display.addItemDecoration(new GridSpacingItemDecoration(1,dptopx(10),true));
         display.setItemAnimator(new DefaultItemAnimator());
-        display.setAdapter(new SchemeAdapter(schemes));
-
 
         apply=findViewById(R.id.apply);
         WebSettings settings = apply.getSettings();
@@ -215,14 +228,43 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void prepareSchemes(){
 
-        String arr="Rashtriya Bal Swasthya Karyakram (RBSK) is a new initiative aiming at early identification  and  early  intervention  for  children  from  birth  to  18  years to cover 4 ‘D’s viz. Defects at  birth,  Deficiencies,  Diseases,  Development  delays  including  disability. The workers now need not to worry about the food after the launch of Mukhyamantri Shramik Ann Sahayta Yojana in the state. The unregistered labourers can get theme registered at the counters to be set-up near Gandhi Maidan in Raipur to avail the scheme benefits. The labour department of the state is already running 24 programmes for the welfare of labourers in unorganized sector in the state. Mukhyamantri Shramik Ann Sahayta Yojana will soon be launched in other districts and towns of the state very soon. This is the first of its kind free lunch scheme in the entire country.";
-        schemes.add(new Schemes("Rashtriya Bal Swasthya Karyakram (RBSK)","10/09/2018", arr, BitmapFactory.decodeResource(getResources(), R.mipmap.rbsk)));
-        String arr1="Jal Kranti Abhiyan aims at turning one water scared village in each district of the country into water surplus village water through a holistic and in The unorganized workers not just work for their livelihood but they also help build the nation. Activities proposed under the campaign include rain water harvesting, recycling of waste water, micro irrigation for using water efficiently and mass awareness program. Along with it, a cadre of local water professional Jal Mitra will be created and they will be given training to create mass awareness";
-        schemes.add(new Schemes("Jal Kranti Abhiyan (JKA)","20/09/2018",arr1,BitmapFactory.decodeResource(getResources(), R.mipmap.jka)));
-        String arr2="Chhattisgarh state government has launched a new scheme in the state to facilitate people with Smartphone. To remove the digital inequality among the inhabitants, the state government has decided to distribute Smartphones among the citizens of the state for free. The scheme namely Sanchar Kranti Yojana aka SKY will be implemented soon across the state. The aim of this scheme is to provide free smartphones for the poor citizens and increase the mobile connectivity in the state. The government will distribute smartphones in two phases under Sanchar Kranti Yojana";
-        schemes.add(new Schemes("Sanchar Kranti Yojana (SKY)","30/09/2018",arr2, BitmapFactory.decodeResource(getResources(), R.mipmap.sky)));
-        String arr3 = "The state government has launched the free lunch scheme for the registered labourers in the unorganized sector in the state. The scheme will cover all the registered unorganized workers including the ones working in construction sector. The labour department of the state would provide food for free of cost to the labourers. As the scheme name suggests, this scheme has been launched by the state govt. of Chhattisgarh to improve the living and working conditions of the labourers who works in the state. This scheme will benefit the working class of people earning their wage on daily or contract basis";
-        schemes.add(new Schemes("Mukhyamantri Shramik Ann Sahaya Yojana (MSASY)","15/10/2018",arr3, BitmapFactory.decodeResource(getResources(), R.mipmap.msasy)));
+//        String arr="Rashtriya Bal Swasthya Karyakram (RBSK) is a new initiative aiming at early identification  and  early  intervention  for  children  from  birth  to  18  years to cover 4 ‘D’s viz. Defects at  birth,  Deficiencies,  Diseases,  Development  delays  including  disability. The workers now need not to worry about the food after the launch of Mukhyamantri Shramik Ann Sahayta Yojana in the state. The unregistered labourers can get theme registered at the counters to be set-up near Gandhi Maidan in Raipur to avail the scheme benefits. The labour department of the state is already running 24 programmes for the welfare of labourers in unorganized sector in the state. Mukhyamantri Shramik Ann Sahayta Yojana will soon be launched in other districts and towns of the state very soon. This is the first of its kind free lunch scheme in the entire country.";
+//        schemes.add(new Schemes("Rashtriya Bal Swasthya Karyakram (RBSK)","10/09/2018", arr, BitmapFactory.decodeResource(getResources(), R.mipmap.rbsk)));
+//        String arr1="Jal Kranti Abhiyan aims at turning one water scared village in each district of the country into water surplus village water through a holistic and in The unorganized workers not just work for their livelihood but they also help build the nation. Activities proposed under the campaign include rain water harvesting, recycling of waste water, micro irrigation for using water efficiently and mass awareness program. Along with it, a cadre of local water professional Jal Mitra will be created and they will be given training to create mass awareness";
+//        schemes.add(new Schemes("Jal Kranti Abhiyan (JKA)","20/09/2018",arr1,BitmapFactory.decodeResource(getResources(), R.mipmap.jka)));
+//        String arr2="Chhattisgarh state government has launched a new scheme in the state to facilitate people with Smartphone. To remove the digital inequality among the inhabitants, the state government has decided to distribute Smartphones among the citizens of the state for free. The scheme namely Sanchar Kranti Yojana aka SKY will be implemented soon across the state. The aim of this scheme is to provide free smartphones for the poor citizens and increase the mobile connectivity in the state. The government will distribute smartphones in two phases under Sanchar Kranti Yojana";
+//        schemes.add(new Schemes("Sanchar Kranti Yojana (SKY)","30/09/2018",arr2, BitmapFactory.decodeResource(getResources(), R.mipmap.sky)));
+//        String arr3 = "The state government has launched the free lunch scheme for the registered labourers in the unorganized sector in the state. The scheme will cover all the registered unorganized workers including the ones working in construction sector. The labour department of the state would provide food for free of cost to the labourers. As the scheme name suggests, this scheme has been launched by the state govt. of Chhattisgarh to improve the living and working conditions of the labourers who works in the state. This scheme will benefit the working class of people earning their wage on daily or contract basis";
+//        schemes.add(new Schemes("Mukhyamantri Shramik Ann Sahaya Yojana (MSASY)","15/10/2018",arr3, BitmapFactory.decodeResource(getResources(), R.mipmap.msasy)));
+
+        Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/schemes").get()
+                .addHeader("Content-Type", "application/json").build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.w("failure", e.getMessage());
+                call.cancel();
+            }
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                assert response.body() != null;
+                String mMessage = Objects.requireNonNull(response.body()).string();
+                if (response.isSuccessful()){
+                    try {
+                        JSONArray postsArray = new JSONArray(mMessage);
+                        Log.w("success", postsArray.toString());
+                        for (int i = 0; i < postsArray.length(); i++) {
+                            JSONObject pO = postsArray.getJSONObject(i);
+                            schemes.add(new Schemes(pO.getString("name"),pO.getString("endDate"),pO.getString("description"), BitmapFactory.decodeResource(getResources(), R.mipmap.rbsk)));
+                        }
+                        display.setAdapter(new SchemeAdapter(HomeActivity.this,schemes));
+                    }
+                    catch (JSONException e) {
+                        Log.w("error", e.toString());
+                    }
+                }
+            }
+        });
     }
     public void scaleX(final View view,int x,int t, Interpolator interpolator)
     {

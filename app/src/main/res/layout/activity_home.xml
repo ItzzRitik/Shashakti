@@ -44,8 +44,8 @@
             app:cardElevation="3dp"
             app:cardCornerRadius="5dp"
             android:id="@+id/data_div"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="-5dp"
             android:paddingBottom="5dp">

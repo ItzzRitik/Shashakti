@@ -1,4 +1,5 @@
 package io.skyhack.skyhack;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,19 +16,23 @@ import java.util.concurrent.TimeUnit;
 
 public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHolder> {
     private List<Schemes> schemes;
+    private HomeActivity homeActivity;
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title;
-        TextView desc;
+        TextView last_date;
         ImageView thumbnail;
         MyViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.title);
+            title.setTypeface(Typeface.createFromAsset(homeActivity.getAssets(), "fonts/exo2.ttf"));
             thumbnail = view.findViewById(R.id.thumbnail);
-            desc = view.findViewById(R.id.desc);
+            last_date = view.findViewById(R.id.desc);
+            last_date.setTypeface(Typeface.createFromAsset(homeActivity.getAssets(), "fonts/exo2.ttf"));
         }
     }
-    SchemeAdapter(List<Schemes> schemes) {
+    SchemeAdapter(HomeActivity homeActivity,List<Schemes> schemes) {
         this.schemes = schemes;
+        this.homeActivity = homeActivity;
     }
     @NonNull
     @Override
@@ -39,7 +44,7 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         Schemes scheme = schemes.get(position);
         holder.title.setText(scheme.getTitle());
-        holder.desc.setText(daysLeft(scheme.getDate()));
+        holder.last_date.setText(daysLeft(scheme.getDate()));
         holder.thumbnail.setImageBitmap(scheme.getThumbnail());
     }
     @Override
