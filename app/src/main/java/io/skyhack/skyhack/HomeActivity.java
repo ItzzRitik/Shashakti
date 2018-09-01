@@ -258,6 +258,7 @@ public class HomeActivity extends AppCompatActivity {
                         JSONArray postsArray = new JSONArray(mMessage);
                         for (int i = 0; i < postsArray.length(); i++) {
                             JSONObject pO = postsArray.getJSONObject(i);
+                            Log.v("error",pO.getString("img"));
                             byte[] decodedString = Base64.decode(pO.getString("img"), Base64.DEFAULT);
                             Bitmap img = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                             schemes.add(new Schemes(pO.getString("name"),pO.getString("endDate"),pO.getString("description"),img));
