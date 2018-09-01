@@ -215,12 +215,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createProfile();
-                /*Intent home=new Intent(ProfileActivity.this,HomeActivity.class);
-                home.putExtra("isProfile",true);
-                home.putExtra("divHeight",pxtodp(data_div.getHeight()));
-                ProfileActivity.this.startActivity(home);
-                finish();
-                ProfileActivity.this.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);*/
             }
         });
         profile=findViewById(R.id.profile);
@@ -475,7 +469,13 @@ public class ProfileActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 assert response.body() != null;
                 if(Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful()){
-
+                    Intent home=new Intent(ProfileActivity.this,HomeActivity.class);
+                    home.putExtra("isProfile",true);
+                    home.putExtra("divHeight",pxtodp(data_div.getHeight()));
+                    home.putExtra("email",ProfileActivity.this.getIntent().getStringExtra("email"));
+                    ProfileActivity.this.startActivity(home);
+                    finish();
+                    ProfileActivity.this.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 }
                 else{
                 }

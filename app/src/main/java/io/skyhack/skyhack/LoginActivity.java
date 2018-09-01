@@ -395,18 +395,18 @@ public class LoginActivity extends AppCompatActivity {
                     assert response.body() != null;
                     if (Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful()){
                         Log.i("sign", "Login Done");
+                        nextLoading(false);
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
                                 //SignIn Initiate
-                                new Handler().postDelayed(new Runnable() {@Override public void run() {
-                                    newPageAnim();nextLoading(false);}},1500);
+                                newPageAnim();
                                 new Handler().postDelayed(new Runnable() {@Override public void run() {
                                     Intent home=new Intent(LoginActivity.this, HomeActivity.class);
                                     home.putExtra("email",email.getText().toString());
                                     LoginActivity.this.startActivity(home);
                                     finish();
-                                    LoginActivity.this.overridePendingTransition(0, 0);}},2500);
+                                    LoginActivity.this.overridePendingTransition(0, 0);}},1500);
                             }
                         });
                     }
