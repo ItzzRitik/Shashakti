@@ -377,7 +377,9 @@ public class ProfileActivity extends AppCompatActivity {
         inter.addChip("Manufacturing");
         inter.addChip("Construction");
         inter.addChip("Education");
-
+        inter.addChip("Health Care");
+        inter.addChip("Banking");
+        inter.addChip("Armed Forces");
 
         new Handler().postDelayed(new Runnable() {
             @Override
