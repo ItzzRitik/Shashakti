@@ -313,7 +313,7 @@ public class LoginActivity extends AppCompatActivity {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    Log.w("sign", e.getMessage());
+                    Log.i("sign", e.getMessage());
                     call.cancel();
                 }
                 @Override
@@ -386,7 +386,7 @@ public class LoginActivity extends AppCompatActivity {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    Log.w("sign", e.getMessage());
+                    Log.i("sign", e.getMessage());
                     call.cancel();
                 }
                 @Override
@@ -429,20 +429,21 @@ public class LoginActivity extends AppCompatActivity {
                     "\"email\": \""+email.getText()+"\",\n" +
                     "\"password\": \""+con_pass.getText()+"\"\n" +
                     "}";
+            Log.i("sign",postBody);
             Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/tempsignup")
-                    .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), postBody))
-                    .addHeader("Content-Type", "application/json").build();
+                    .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"), postBody))
+                    .addHeader("Content-Type", "application/x-www-form-urlencoded").build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    Log.w("sign", e.getMessage());
+                    Log.i("sign", e.getMessage());
                     call.cancel();
                 }
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     assert response.body() != null;
                     if(Integer.parseInt(Objects.requireNonNull(response.body()).string())==1){
-                        Log.w("sign","Account Creation Successful");
+                        Log.i("sign","Account Creation Successful");
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run(){
@@ -460,7 +461,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 nextLoading(false);
-                                Log.w("sign","Account Creation Failed");
+                                Log.i("sign","Account Creation Failed");
                                 Toast.makeText(LoginActivity.this, "Account Creation Failed", Toast.LENGTH_SHORT).show();
                             }
                         });
