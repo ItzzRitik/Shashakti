@@ -367,11 +367,17 @@ public class ProfileActivity extends AppCompatActivity {
                 .useInsetPadding(true)
                 .typeface(Typeface.createFromAsset(getAssets(), "fonts/above.ttf"));
         inter = new ChipCloud(ProfileActivity.this, interest,config);
-        inter.addChip("Agriculture");
+        inter.addChip("Farming");
+        inter.addChip("Dairy");
+        inter.addChip("Livestock");
         inter.addChip("Engineering");
         inter.addChip("Sports");
         inter.addChip("Transportation");
-        inter.addChip("IT / Services");
+        inter.addChip("IT Services");
+        inter.addChip("Manufacturing");
+        inter.addChip("Construction");
+        inter.addChip("Education");
+
 
         new Handler().postDelayed(new Runnable() {
             @Override
