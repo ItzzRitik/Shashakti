@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/Theme2"
+            android:theme="@style/Theme1"
             android:windowSoftInputMode="adjustPan|stateHidden">
 
         </activity>
