@@ -17,6 +17,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -26,6 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -55,10 +57,18 @@ import com.tomergoldst.tooltips.ToolTipsManager;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 import fisk.chipcloud.ChipCloud;
 import fisk.chipcloud.ChipCloudConfig;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static android.R.attr.maxHeight;
 import static android.R.attr.maxWidth;
@@ -86,6 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
     double diagonal;
     FlexboxLayout interest;
     ChipCloud inter;
+    OkHttpClient client;
     int interestX=0;
     @Override
     protected void onPause() {
@@ -124,6 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
         data_div=findViewById(R.id.data_div);
         profile_menu_cov=findViewById(R.id.profile_menu_cov);
         toolTip = new ToolTipsManager();
+        client = new OkHttpClient();
 
         gender_tag=findViewById(R.id.gender_tag);
         gender_tag.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/above.ttf"));
@@ -200,6 +212,7 @@ public class ProfileActivity extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                createProfile();
                 Intent home=new Intent(ProfileActivity.this,HomeActivity.class);
                 home.putExtra("isProfile",true);
                 home.putExtra("divHeight",pxtodp(data_div.getHeight()));
@@ -424,6 +437,30 @@ public class ProfileActivity extends AppCompatActivity {
                     }},500);
 
             }},1500);
+    }
+    public void createProfile(){
+        RequestBody postBody = new FormBody.Builder()
+                .add("email", email.getText().toString())
+                .add("firstname", f_name.getText().toString())
+                .add("lastname", l_name.getText().toString()).build();
+        Log.i("sign",postBody.toString());
+        Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/tempsignup").post(postBody).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.i("sign", e.getMessage());
+                call.cancel();
+            }
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                assert response.body() != null;
+                if(Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful()){
+
+                }
+                else{
+                }
+            }
+        });
     }
     public void selectInterest(boolean open){
         if(open){
