@@ -55,7 +55,6 @@
                 android:scrollbars="vertical"
                 android:visibility="gone"
                 android:id="@+id/display">
-
             </android.support.v7.widget.RecyclerView>
             <WebView
                 android:layout_width="match_parent"
