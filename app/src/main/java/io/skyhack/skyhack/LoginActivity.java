@@ -49,8 +49,10 @@ import java.util.regex.Pattern;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
@@ -311,7 +313,7 @@ public class LoginActivity extends AppCompatActivity {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    Log.w("failure", e.getMessage());
+                    Log.w("sign", e.getMessage());
                     call.cancel();
                 }
                 @Override
@@ -320,7 +322,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful())
                     {
                         //If Exists then ask password
-                        Log.e("", "SignIN");
+                        Log.e("sign", "SignIN");
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
@@ -346,7 +348,7 @@ public class LoginActivity extends AppCompatActivity {
                     else
                     {
                         //If Doesn't exist then ask signup
-                        Log.e("", "SignUP");
+                        Log.e("sign", "SignUP");
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
@@ -384,14 +386,14 @@ public class LoginActivity extends AppCompatActivity {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    Log.w("failure", e.getMessage());
+                    Log.w("sign", e.getMessage());
                     call.cancel();
                 }
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     assert response.body() != null;
                     if (Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful()){
-                        Log.i("Done", "Login Done");
+                        Log.i("sign", "Login Done");
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
@@ -406,7 +408,7 @@ public class LoginActivity extends AppCompatActivity {
                         });
                     }
                     else{
-                        Log.i("Failed", "Login Failed");
+                        Log.i("sign", "Login Failed");
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
@@ -422,13 +424,49 @@ public class LoginActivity extends AppCompatActivity {
         else if(log==2)
         {
             //SignUp Initiate
-            nextLoading(true);
-            new Handler().postDelayed(new Runnable() {@Override public void run() {
-                newPageAnim();nextLoading(false);}},1500);
-            new Handler().postDelayed(new Runnable() {@Override public void run() {
-                LoginActivity.this.startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
-                finish();
-                LoginActivity.this.overridePendingTransition(0, 0);}},2500);
+            Log.i("sign", "SignUp Initiate");
+            String postBody="{\n" +
+                    "\"email\": \""+email.getText()+"\",\n" +
+                    "\"password\": \""+con_pass.getText()+"\"\n" +
+                    "}";
+            Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/tempsignup")
+                    .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), postBody))
+                    .addHeader("Content-Type", "application/json").build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    Log.w("sign", e.getMessage());
+                    call.cancel();
+                }
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    assert response.body() != null;
+                    if(Integer.parseInt(Objects.requireNonNull(response.body()).string())==1){
+                        Log.w("sign","Account Creation Successful");
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run(){
+                                newPageAnim();
+                                nextLoading(false);
+                                new Handler().postDelayed(new Runnable() {@Override public void run() {
+                                    LoginActivity.this.startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                                    finish();
+                                    LoginActivity.this.overridePendingTransition(0, 0);}},1500);
+                            }
+                        });
+                    }
+                    else{
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                nextLoading(false);
+                                Log.w("sign","Account Creation Failed");
+                                Toast.makeText(LoginActivity.this, "Account Creation Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            });
         }
     }
     public void nextLoading(Boolean loading)
