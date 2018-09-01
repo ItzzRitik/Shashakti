@@ -572,16 +572,6 @@ public class ProfileActivity extends AppCompatActivity {
                     Bitmap bitmap= MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), resultUri);
                     profile.setImageBitmap(bitmap);dp_cover.setImageBitmap(bitmap);profile_dp=bitmap;isDP_added=true;
                     closeCam();
-                    new Handler().postDelayed(new Runnable() {@Override public void run()
-                    {
-                        ToolTip.Builder builder = new ToolTip.Builder(ProfileActivity.this, profile,data_div, getString(R.string.remove_pic), ToolTip.POSITION_BELOW);
-                        builder.setBackgroundColor(getResources().getColor(R.color.profile));
-                        builder.setTextColor(getResources().getColor(R.color.profile_text));
-                        builder.setGravity(ToolTip.GRAVITY_CENTER);
-                        builder.setTextSize(15);
-                        toolTip.show(builder.build());vibrate(35);
-                    }},1000);
-                    new Handler().postDelayed(new Runnable() {@Override public void run() {toolTip.findAndDismiss(profile);}},3500);
                     new File(getRealPathFromURI(ProfileActivity.this,Uri.parse(profile_path))).delete();
                 }
                 catch (Exception e){}
