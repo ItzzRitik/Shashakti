@@ -315,74 +315,65 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     assert response.body() != null;
-                    String signVal = Objects.requireNonNull(response.body()).string();
-                    Log.w("signVal", signVal);
-                    if(Integer.parseInt(signVal)==1 && response.isSuccessful())
+                    if(Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful())
                     {
                         //If Exists then ask password
                         Log.e("", "SignIN");
-                        Handler mainHandler = new Handler(Looper.getMainLooper());
-                        Runnable myRunnable = new Runnable() {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
-                                new Handler().postDelayed(new Runnable() {@Override public void run() {
-                                    scaleY(social_div,0,300,new AccelerateDecelerateInterpolator());
-                                    login_div.setPadding(0,0,0,0);
-                                    nextPad(8,4);
-                                    nextLoading(false);
-                                    //Ask Password
-                                    pass.setVisibility(View.VISIBLE);
-                                    con_pass.setVisibility(View.GONE);
-                                    email_reset.setVisibility(View.VISIBLE);
-                                    pass.requestFocus();
-                                    pass.setEnabled(true);
-                                    setButtonEnabled(false);
-                                    forget_create.setTextSize(13);
-                                    forget_create.setText(getResources().getString(R.string.forgot_pass));
-                                    scaleY(forget_pass,27,300,new OvershootInterpolator());
-                                    scaleY(login_div,98,300,new AccelerateDecelerateInterpolator());
-                                    log=1;
-                                }},1500);
+                                scaleY(social_div,0,300,new AccelerateDecelerateInterpolator());
+                                login_div.setPadding(0,0,0,0);
+                                nextPad(8,4);
+                                nextLoading(false);
+                                //Ask Password
+                                pass.setVisibility(View.VISIBLE);
+                                con_pass.setVisibility(View.GONE);
+                                email_reset.setVisibility(View.VISIBLE);
+                                pass.requestFocus();
+                                pass.setEnabled(true);
+                                setButtonEnabled(false);
+                                forget_create.setTextSize(13);
+                                forget_create.setText(getResources().getString(R.string.forgot_pass));
+                                scaleY(forget_pass,27,300,new OvershootInterpolator());
+                                scaleY(login_div,98,300,new AccelerateDecelerateInterpolator());
+                                log=1;
                             }
-                        };
-                        mainHandler.post(myRunnable);
+                        });
                     }
                     else
                     {
                         //If Doesn't exist then ask signup
                         Log.e("", "SignUP");
-                        Handler mainHandler = new Handler(Looper.getMainLooper());
-                        Runnable myRunnable = new Runnable() {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
-                                new Handler().postDelayed(new Runnable() {@Override public void run() {
-                                    scaleY(social_div,0,300,new AccelerateDecelerateInterpolator());
-                                    login_div.setPadding(0,0,0,0);
-                                    nextPad(8,4);
-                                    nextLoading(false);
+                                scaleY(social_div,0,300,new AccelerateDecelerateInterpolator());
+                                login_div.setPadding(0,0,0,0);
+                                nextPad(8,4);
+                                nextLoading(false);
 
-                                    //Ask SignUp Details
-                                    pass.setVisibility(View.VISIBLE);
-                                    con_pass.setVisibility(View.VISIBLE);
-                                    email_reset.setVisibility(View.VISIBLE);
-                                    pass.requestFocus();
-                                    pass.setEnabled(true);
-                                    setButtonEnabled(false);
-                                    forget_create.setTextSize(14);
-                                    forget_create.setText(getResources().getString(R.string.login_create));
-                                    scaleY(forget_pass,30,300,new OvershootInterpolator());
-                                    scaleY(login_div,148,300,new AccelerateDecelerateInterpolator());
-                                    log=2;
-                                }},1500);
+                                //Ask SignUp Details
+                                pass.setVisibility(View.VISIBLE);
+                                con_pass.setVisibility(View.VISIBLE);
+                                email_reset.setVisibility(View.VISIBLE);
+                                pass.requestFocus();
+                                pass.setEnabled(true);
+                                setButtonEnabled(false);
+                                forget_create.setTextSize(14);
+                                forget_create.setText(getResources().getString(R.string.login_create));
+                                scaleY(forget_pass,30,300,new OvershootInterpolator());
+                                scaleY(login_div,148,300,new AccelerateDecelerateInterpolator());
+                                log=2;
                             }
-                        };
-                        mainHandler.post(myRunnable);
+                        });
                     }
                 }
             });
         }
         else if(log==1)
         {
+            nextLoading(true);
             HttpUrl.Builder urlBuilder = HttpUrl.parse("https://nodeexercise-adityabhardwaj.c9users.io/login").newBuilder();
             urlBuilder.addQueryParameter("email", email.getText().toString());
             urlBuilder.addQueryParameter("password", pass.getText().toString());
@@ -397,20 +388,26 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     assert response.body() != null;
-                    String mMessage = Objects.requireNonNull(response.body()).string();
-                    if (response.isSuccessful()){
-
+                    if (Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful()){
+                        Log.i("Done", "Login Done");
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //SignIn Initiate
+                                new Handler().postDelayed(new Runnable() {@Override public void run() {
+                                    newPageAnim();nextLoading(false);}},1500);
+                                new Handler().postDelayed(new Runnable() {@Override public void run() {
+                                    LoginActivity.this.startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                    finish();
+                                    LoginActivity.this.overridePendingTransition(0, 0);}},2500);
+                            }
+                        });
+                    }
+                    else{
+                        Log.i("Failed", "Login Failed");
                     }
                 }
             });
-            //SignIn Initiate
-            nextLoading(true);
-            new Handler().postDelayed(new Runnable() {@Override public void run() {
-                newPageAnim();nextLoading(false);}},1500);
-            new Handler().postDelayed(new Runnable() {@Override public void run() {
-                LoginActivity.this.startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
-                finish();
-                LoginActivity.this.overridePendingTransition(0, 0);}},2500);
         }
         else if(log==2)
         {
