@@ -403,6 +403,7 @@ public class LoginActivity extends AppCompatActivity {
                                     newPageAnim();nextLoading(false);}},1500);
                                 new Handler().postDelayed(new Runnable() {@Override public void run() {
                                     Intent home=new Intent(LoginActivity.this, HomeActivity.class);
+                                    home.putExtra("email",email.getText().toString());
                                     LoginActivity.this.startActivity(home);
                                     finish();
                                     LoginActivity.this.overridePendingTransition(0, 0);}},2500);

@@ -215,12 +215,12 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createProfile();
-                Intent home=new Intent(ProfileActivity.this,HomeActivity.class);
+                /*Intent home=new Intent(ProfileActivity.this,HomeActivity.class);
                 home.putExtra("isProfile",true);
                 home.putExtra("divHeight",pxtodp(data_div.getHeight()));
                 ProfileActivity.this.startActivity(home);
                 finish();
-                ProfileActivity.this.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                ProfileActivity.this.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);*/
             }
         });
         profile=findViewById(R.id.profile);
@@ -454,7 +454,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .add("lastname", l_name.getText().toString()+"")
                 .add("gender", gender_tag.getText().toString()+"")
                 .add("dob", dob.getText().toString()+"")
-                .add("aadhaar", aadhaar.getText().toString()+"")
+                .add("aadhar", aadhaar.getText().toString()+"")
                 .add("occupation", occ.getText().toString()+"");
         for(int i=0;i<tags.length;i++){
             if(tags[i])

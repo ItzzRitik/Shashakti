@@ -56,6 +56,7 @@ import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -238,7 +239,9 @@ public class HomeActivity extends AppCompatActivity {
 //        String arr3 = "The state government has launched the free lunch scheme for the registered labourers in the unorganized sector in the state. The scheme will cover all the registered unorganized workers including the ones working in construction sector. The labour department of the state would provide food for free of cost to the labourers. As the scheme name suggests, this scheme has been launched by the state govt. of Chhattisgarh to improve the living and working conditions of the labourers who works in the state. This scheme will benefit the working class of people earning their wage on daily or contract basis";
 //        schemes.add(new Schemes("Mukhyamantri Shramik Ann Sahaya Yojana (MSASY)","15/10/2018",arr3, BitmapFactory.decodeResource(getResources(), R.mipmap.msasy)));
 
-        Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/schemes").get()
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://nodeexercise-adityabhardwaj.c9users.io/schemes").newBuilder();
+        urlBuilder.addQueryParameter("email", getIntent().getStringExtra("email"));
+        Request request = new Request.Builder().url(urlBuilder.build().toString()).get()
                 .addHeader("Content-Type", "application/json").build();
         client.newCall(request).enqueue(new Callback() {
             @Override
