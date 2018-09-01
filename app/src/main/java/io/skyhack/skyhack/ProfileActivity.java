@@ -461,7 +461,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
         RequestBody formBody = postBody.build();
 
-
         Log.i("sign",postBody.toString());
         Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/update").post(formBody).build();
         client.newCall(request).enqueue(new Callback() {
@@ -584,7 +583,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
             else if (resultcode == UCrop.RESULT_ERROR) {
                 final Throwable cropError = UCrop.getError(intent);
-                Toast.makeText(ProfileActivity.this,getString(R.string.error)+cropError, Toast.LENGTH_LONG).show();
+                Log.e("crop", getString(R.string.error)+cropError);
                 new File(getRealPathFromURI(ProfileActivity.this,Uri.parse(profile_path))).delete();
             }
         }
