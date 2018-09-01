@@ -24,6 +24,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -257,8 +258,9 @@ public class HomeActivity extends AppCompatActivity {
                         JSONArray postsArray = new JSONArray(mMessage);
                         for (int i = 0; i < postsArray.length(); i++) {
                             JSONObject pO = postsArray.getJSONObject(i);
-                            schemes.add(new Schemes(pO.getString("name"), pO.getString("endDate"),pO.getString("description"),
-                                    BitmapFactory.decodeResource(getResources(), R.mipmap.msasy)));
+                            byte[] decodedString = Base64.decode(pO.getString("img"), Base64.DEFAULT);
+                            Bitmap img = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            schemes.add(new Schemes(pO.getString("name"),pO.getString("endDate"),pO.getString("description"),img));
                         }
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
