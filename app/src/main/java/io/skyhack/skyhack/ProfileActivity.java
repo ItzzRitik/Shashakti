@@ -464,7 +464,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         Log.i("sign",postBody.toString());
-        Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/tempsignup").post(formBody).build();
+        Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/update").post(formBody).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
