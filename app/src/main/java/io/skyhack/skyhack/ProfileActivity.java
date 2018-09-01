@@ -77,7 +77,7 @@ import static android.R.attr.maxWidth;
 public class ProfileActivity extends AppCompatActivity {
     RelativeLayout logo_div,splash_cover,camera_pane,permission_camera,galary,click_pane,profile_menu_cov,interestPage;
     CardView data_div;
-    ImageView ico_splash,done,camera_flip,click,flash;
+    ImageView dp_cover,ico_splash,done,camera_flip,click,flash;
     Button allow_camera;
     Animation anim;
     TextView page_tag,gender_tag,interest_button;
@@ -567,8 +567,7 @@ public class ProfileActivity extends AppCompatActivity {
                 try {
                     final Uri resultUri = UCrop.getOutput(intent);
                     Bitmap bitmap= MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), resultUri);
-                    profile.setImageBitmap(bitmap);profile_dp=bitmap;isDP_added=true;closeCam();
-                    closeCam();
+                    profile.setImageBitmap(bitmap);dp_cover.setImageBitmap(bitmap);profile_dp=bitmap;isDP_added=true;closeCam();
                     new Handler().postDelayed(new Runnable() {@Override public void run()
                     {
                         ToolTip.Builder builder = new ToolTip.Builder(ProfileActivity.this, profile,data_div, getString(R.string.remove_pic), ToolTip.POSITION_ABOVE);

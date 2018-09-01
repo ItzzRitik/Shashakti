@@ -55,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:id="@+id/dp_cover"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/me"/>
                 <RelativeLayout
