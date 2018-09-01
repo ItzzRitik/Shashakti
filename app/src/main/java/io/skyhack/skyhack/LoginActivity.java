@@ -395,12 +395,12 @@ public class LoginActivity extends AppCompatActivity {
                     assert response.body() != null;
                     if (Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful()){
                         Log.i("sign", "Login Done");
-                        nextLoading(false);
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
                                 //SignIn Initiate
                                 newPageAnim();
+                                nextLoading(false);
                                 new Handler().postDelayed(new Runnable() {@Override public void run() {
                                     Intent home=new Intent(LoginActivity.this, HomeActivity.class);
                                     home.putExtra("email",email.getText().toString());

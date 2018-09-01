@@ -109,6 +109,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        refresh = findViewById(R.id.refresh);
         refresh.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -250,12 +251,15 @@ public class HomeActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 assert response.body() != null;
                 String mMessage = Objects.requireNonNull(response.body()).string();
+                refresh.setRefreshing(false);
                 if (response.isSuccessful()){
                     try {
                         JSONArray postsArray = new JSONArray(mMessage);
                         for (int i = 0; i < postsArray.length(); i++) {
                             JSONObject pO = postsArray.getJSONObject(i);
-                            schemes.add(new Schemes(pO.getString("name"),pO.getString("endDate"),pO.getString("description"), BitmapFactory.decodeResource(getResources(), R.mipmap.rbsk)));
+                            if((schemes.get(0).getTitle()).equals(pO.getString("name"))){break;}
+                            schemes.add(new Schemes(pO.getString("name"), pO.getString("endDate"),pO.getString("description"),
+                                    BitmapFactory.decodeResource(getResources(), R.mipmap.msasy)));
                         }
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
