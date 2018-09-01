@@ -4,13 +4,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
 public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHolder> {
     private List<Schemes> schemes;
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -24,7 +26,7 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
             desc = view.findViewById(R.id.desc);
         }
     }
-    public SchemeAdapter(List<Schemes> schemes) {
+    SchemeAdapter(List<Schemes> schemes) {
         this.schemes = schemes;
     }
     @NonNull
@@ -37,11 +39,24 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         Schemes scheme = schemes.get(position);
         holder.title.setText(scheme.getTitle());
-        holder.desc.setText(scheme.getDesc());
+        holder.desc.setText(daysLeft(scheme.getDate()));
         holder.thumbnail.setImageBitmap(scheme.getThumbnail());
     }
     @Override
     public int getItemCount() {
         return schemes.size();
+    }
+    private String daysLeft(String date)
+    {
+        long diffInMillies=0;
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            Calendar c = Calendar.getInstance();
+            Date firstDate = sdf.parse(sdf.format(c.getTime()));
+            Date secondDate = sdf.parse(date);
+            diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+        }
+        catch (Exception e){}
+        return(TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS)+" Days\nRemaining");
     }
 }

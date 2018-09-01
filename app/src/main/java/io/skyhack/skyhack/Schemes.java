@@ -5,20 +5,20 @@ import android.view.View;
 
 public class Schemes {
     private String title;
-    private String desc;
+    private String last_date;
     private String details[];
     private Bitmap thumbnail;
     private View.OnClickListener requestBtnClickListener;
-    Schemes(String title, String desc,String details[], Bitmap thumbnail) {
+    Schemes(String title, String last_date,String details[], Bitmap thumbnail) {
         this.title = title;
-        this.desc = desc;
+        this.last_date = last_date;
         this.thumbnail = thumbnail;
         this.details = details;
     }
     public String getTitle() {return title;}
     public void setTitle(String title) {this.title = title;}
-    public String getDesc() {return desc;}
-    public void setDesc(String desc) {this.desc = desc;}
+    public String getDate() {return last_date;}
+    public void setDate(String last_date) {this.last_date = last_date;}
     public String[] getDetails() {return details;}
     public void setDetails(String[] details) {this.details = details;}
     public Bitmap getThumbnail() {return thumbnail;}

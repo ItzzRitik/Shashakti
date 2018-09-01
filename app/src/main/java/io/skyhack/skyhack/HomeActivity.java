@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.http.SslError;
 import android.os.Build;
@@ -17,6 +18,8 @@ import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -92,8 +95,12 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         schemes = new ArrayList<>();
-        prepareSchemes();
         display=findViewById(R.id.display);
+        prepareSchemes();
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this,1);
+        display.setLayoutManager(mLayoutManager);
+        display.addItemDecoration(new GridSpacingItemDecoration(1,dptopx(10),true));
+        display.setItemAnimator(new DefaultItemAnimator());
         display.setAdapter(new SchemeAdapter(schemes));
 
 
@@ -209,13 +216,13 @@ public class HomeActivity extends AppCompatActivity {
     public void prepareSchemes(){
 
         String arr[]={"Rashtriya Bal Swasthya Karyakram (RBSK) is a new initiative aiming at early identification  and  early  intervention  for  children  from  birth  to  18  years to cover 4 ‘D’s viz. Defects at  birth,  Deficiencies,  Diseases,  Development  delays  including  disability.","The workers now need not to worry about the food after the launch of Mukhyamantri Shramik Ann Sahayta Yojana in the state. The unregistered labourers can get theme registered at the counters to be set-up near Gandhi Maidan in Raipur to avail the scheme benefits. The labour department of the state is already running 24 programmes for the welfare of labourers in unorganized sector in the state. Mukhyamantri Shramik Ann Sahayta Yojana will soon be launched in other districts and towns of the state very soon. This is the first of its kind free lunch scheme in the entire country."};
-        schemes.add(new Schemes("Rashtriya Bal Swasthya Karyakram (RBSK)","47 Days\nRemaining", arr, BitmapFactory.decodeResource(getResources(), R.mipmap.rbsk)));
+        schemes.add(new Schemes("Rashtriya Bal Swasthya Karyakram (RBSK)","10/09/2018", arr, BitmapFactory.decodeResource(getResources(), R.mipmap.rbsk)));
         String arr1[]={"Jal Kranti Abhiyan aims at turning one water scared village in each district of the country into water surplus village water through a holistic and in","The unorganized workers not just work for their livelihood but they also help build the nation." ,"Activities proposed under the campaign include rain water harvesting, recycling of waste water, micro irrigation for using water efficiently and mass awareness program. Along with it, a cadre of local water professional Jal Mitra will be created and they will be given training to create mass awareness"};
-        schemes.add(new Schemes("Jal Kranti Abhiyan (JKA)","72 Days\nRemaining",arr1,BitmapFactory.decodeResource(getResources(), R.mipmap.jka)));
+        schemes.add(new Schemes("Jal Kranti Abhiyan (JKA)","20/09/2018",arr1,BitmapFactory.decodeResource(getResources(), R.mipmap.jka)));
         String arr2[]={"Chhattisgarh state government has launched a new scheme in the state to facilitate people with Smartphone. To remove the digital inequality among the inhabitants, the state government has decided to distribute Smartphones among the citizens of the state for free. The scheme namely Sanchar Kranti Yojana aka SKY will be implemented soon across the state.","The aim of this scheme is to provide free smartphones for the poor citizens and increase the mobile connectivity in the state. The government will distribute smartphones in two phases under “Sanchar Kranti Yojana”."};
-        schemes.add(new Schemes("Sanchar Kranti Yojana (SKY)","29 Days\nRemaining",arr2, BitmapFactory.decodeResource(getResources(), R.mipmap.sky)));
+        schemes.add(new Schemes("Sanchar Kranti Yojana (SKY)","30/09/2018",arr2, BitmapFactory.decodeResource(getResources(), R.mipmap.sky)));
         String arr3[]={"The state government has launched the free lunch scheme for the registered labourers in the unorganized sector in the state. The scheme will cover all the registered unorganized workers including the ones working in construction sector. The labour department of the state would provide food for free of cost to the labourers.","As the scheme name suggests, this scheme has been launched by the state govt. of Chhattisgarh to improve the living and working conditions of the labourers who works in the state. This scheme will benefit the working class of people earning their wage on daily or contract basis."};
-        schemes.add(new Schemes("Mukhyamantri Shramik Ann Sahaya Yojana (MSASY)","57 Days\nRemaining",arr3, BitmapFactory.decodeResource(getResources(), R.mipmap.msasy)));
+        schemes.add(new Schemes("Mukhyamantri Shramik Ann Sahaya Yojana (MSASY)","15/10/2018",arr3, BitmapFactory.decodeResource(getResources(), R.mipmap.msasy)));
     }
     public void scaleX(final View view,int x,int t, Interpolator interpolator)
     {
@@ -256,5 +263,34 @@ public class HomeActivity extends AppCompatActivity {
     public void vibrate(int ms)
     {
         ((Vibrator) Objects.requireNonNull(this.getSystemService(Context.VIBRATOR_SERVICE))).vibrate(ms);
+    }
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+        private int spanCount;
+        private int spacing;
+        private boolean includeEdge;
+        GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+            this.spanCount = spanCount;
+            this.spacing = spacing;
+            this.includeEdge = includeEdge;
+        }
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            int position = parent.getChildAdapterPosition(view);
+            int column = position % spanCount;
+            if (includeEdge){
+                outRect.left = spacing - column * spacing / spanCount;
+                outRect.right = (column + 1) * spacing / spanCount;
+                if (position < spanCount) {
+                    outRect.top = spacing;
+                }
+                outRect.bottom = spacing;
+            } else {
+                outRect.left = column * spacing / spanCount;
+                outRect.right = spacing - (column + 1) * spacing / spanCount;
+                if (position >= spanCount) {
+                    outRect.top = spacing;
+                }
+            }
+        }
     }
 }
