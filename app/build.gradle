@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.github.yalantis:ucrop:2.2.2'
     implementation 'com.tomergoldst.android:tooltips:1.0.6'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.rm:rmswitch:1.2.2'
     implementation 'com.github.fiskurgit:ChipCloud:3.0.5'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

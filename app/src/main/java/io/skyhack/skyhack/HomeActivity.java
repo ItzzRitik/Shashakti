@@ -48,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -259,8 +260,7 @@ public class HomeActivity extends AppCompatActivity {
                         for (int i = 0; i < postsArray.length(); i++) {
                             JSONObject pO = postsArray.getJSONObject(i);
                             Log.v("error",pO.getString("img"));
-                            byte[] decodedString = Base64.decode(pO.getString("img"), Base64.DEFAULT);
-                            Bitmap img = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            Bitmap img = BitmapFactory.decodeStream(new URL(pO.getString("img")).openConnection().getInputStream());
                             schemes.add(new Schemes(pO.getString("name"),pO.getString("endDate"),pO.getString("description"),img));
                         }
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
