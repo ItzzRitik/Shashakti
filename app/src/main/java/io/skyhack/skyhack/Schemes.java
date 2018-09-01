@@ -7,9 +7,9 @@ public class Schemes {
     private String title;
     private String last_date;
     private String details;
-    private Bitmap thumbnail;
+    private String thumbnail;
     private View.OnClickListener requestBtnClickListener;
-    Schemes(String title, String last_date,String details, Bitmap thumbnail) {
+    Schemes(String title, String last_date,String details, String thumbnail) {
         this.title = title;
         this.last_date = last_date;
         this.thumbnail = thumbnail;
@@ -21,8 +21,8 @@ public class Schemes {
     public void setDate(String last_date) {this.last_date = last_date;}
     public String getDetails() {return details;}
     public void setDetails(String details) {this.details = details;}
-    public Bitmap getThumbnail() {return thumbnail;}
-    public void setThumbnail(Bitmap thumbnail) {this.thumbnail = thumbnail;}
+    public String getThumbnail() {return thumbnail;}
+    public void setThumbnail(String thumbnail) {this.thumbnail = thumbnail;}
 
     public View.OnClickListener getRequestBtnClickListener() {return requestBtnClickListener;}
     public void setRequestBtnClickListener(View.OnClickListener requestBtnClickListener) {

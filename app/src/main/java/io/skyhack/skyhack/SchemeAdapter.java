@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,7 +48,7 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
         Schemes scheme = schemes.get(position);
         holder.title.setText(scheme.getTitle());
         holder.last_date.setText(daysLeft(scheme.getDate()));
-        holder.thumbnail.setImageBitmap(scheme.getThumbnail());
+        Picasso.get().load(scheme.getThumbnail()).into(holder.thumbnail);
     }
     @Override
     public int getItemCount() {
