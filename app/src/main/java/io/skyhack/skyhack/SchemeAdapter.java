@@ -56,7 +56,7 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
             Date secondDate = sdf.parse(date);
             diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
         }
-        catch (Exception e){}
-        return(TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS)+" Days\nRemaining");
+        catch (Exception ignored){}
+        return((TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS)+1)+" Days\nRemaining");
     }
 }
