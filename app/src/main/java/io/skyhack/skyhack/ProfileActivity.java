@@ -137,6 +137,7 @@ public class ProfileActivity extends AppCompatActivity {
         splash_cover=findViewById(R.id.splash_cover);
         logo_div=findViewById(R.id.logo_div);
         data_div=findViewById(R.id.data_div);
+        dp_cover=findViewById(R.id.dp_cover);
         profile_menu_cov=findViewById(R.id.profile_menu_cov);
         toolTip = new ToolTipsManager();
         client = new OkHttpClient();
@@ -263,8 +264,6 @@ public class ProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
-        profile_url=new File(new ContextWrapper(getApplicationContext()).getDir("imageDir", Context.MODE_PRIVATE),"profile.jpg").getAbsolutePath();
-
 
         options=new UCrop.Options();
         options.setCircleDimmedLayer(true);
@@ -301,6 +300,8 @@ public class ProfileActivity extends AppCompatActivity {
                         .withMaxResultSize(maxWidth, maxHeight).start(ProfileActivity.this);
             }
         });
+        profile_url=new File(new ContextWrapper(getApplicationContext()).getDir("imageDir", Context.MODE_PRIVATE),"profile.jpg").getAbsolutePath();
+
 
         flash=findViewById(R.id.flash);
         flash.setOnClickListener(new View.OnClickListener() {
@@ -573,7 +574,7 @@ public class ProfileActivity extends AppCompatActivity {
                     closeCam();
                     new Handler().postDelayed(new Runnable() {@Override public void run()
                     {
-                        ToolTip.Builder builder = new ToolTip.Builder(ProfileActivity.this, profile,profile_menu_cov, getString(R.string.remove_pic), ToolTip.POSITION_ABOVE);
+                        ToolTip.Builder builder = new ToolTip.Builder(ProfileActivity.this, profile,data_div, getString(R.string.remove_pic), ToolTip.POSITION_BELOW);
                         builder.setBackgroundColor(getResources().getColor(R.color.profile));
                         builder.setTextColor(getResources().getColor(R.color.profile_text));
                         builder.setGravity(ToolTip.GRAVITY_CENTER);
