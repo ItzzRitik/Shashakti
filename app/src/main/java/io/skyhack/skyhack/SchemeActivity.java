@@ -84,15 +84,19 @@ public class SchemeActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                nextLoading(false);
-                            }
-                        });
 
-                        if(response.isSuccessful()){
-                            Log.i("apply","Application Successful - "+(Objects.requireNonNull(response.body())).string());
+                        if(response.isSuccessful() && Integer.parseInt(Objects.requireNonNull(response.body()).string())==1){
+                            Log.i("apply","Application Successful");
+                            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            nextLoading(false);
+                                        }},800);
+                                }
+                            });
                         }
                         else {
                             Log.i("apply","Application Failed - "+(Objects.requireNonNull(response.body())).string());
@@ -143,8 +147,10 @@ public class SchemeActivity extends AppCompatActivity {
         {
             nextLoad.setVisibility(View.GONE);apply.setText("");
             scaleX(apply,120,300,new OvershootInterpolator());
+            apply.setBackgroundResource(R.drawable.signin_pressed);
+            apply.setTextColor(Color.parseColor("#ffffff"));
             new Handler().postDelayed(new Runnable()
-            {@Override public void run() {apply.setText(getString(R.string.apply));}},300);
+            {@Override public void run() {apply.setText("Done");}},150);
         }
     }
     public void scaleX(final View view,int x,int t, Interpolator interpolator)
