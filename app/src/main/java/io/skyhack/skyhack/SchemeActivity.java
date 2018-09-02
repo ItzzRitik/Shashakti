@@ -16,8 +16,7 @@ import android.widget.TextView;
 
 public class SchemeActivity extends AppCompatActivity {
 
-    RelativeLayout splash_cover,logo_div;
-    TextView page_tag;
+    RelativeLayout splash_cover;
     ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +24,9 @@ public class SchemeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scheme);
 
         splash_cover=findViewById(R.id.splash_cover);
-        logo_div=findViewById(R.id.logo_div);
-        page_tag=findViewById(R.id.page_tag);
-        back.findViewById(R.id.back);
+        back=findViewById(R.id.back);
 
-        splash_cover.setVisibility(View.GONE);
-        logo_div.setVisibility(View.VISIBLE);
-        page_tag.setVisibility(View.VISIBLE);
+        splash_cover.setVisibility(View.VISIBLE);
         back.setVisibility(View.VISIBLE);
     }
     public void scaleX(final View view,int x,int t, Interpolator interpolator)
