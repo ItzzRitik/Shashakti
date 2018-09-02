@@ -1,6 +1,7 @@
 package io.skyhack.skyhack;
 
 import android.animation.ValueAnimator;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ public class SchemeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheme);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         splash_cover=findViewById(R.id.splash_cover);
         back=findViewById(R.id.back);
