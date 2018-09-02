@@ -69,6 +69,7 @@ public class SchemeActivity extends AppCompatActivity {
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                nextLoading(true);
                 RequestBody postBody = new FormBody.Builder()
                         .add("email", getIntent().getStringExtra("email"))
                         .add("aadhar", getIntent().getStringExtra("aadhaar"))
@@ -83,6 +84,7 @@ public class SchemeActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                        nextLoading(false);
                         if(response.isSuccessful()){
                             Log.i("apply","Application Successful - "+(Objects.requireNonNull(response.body())).string());
                         }
@@ -136,7 +138,7 @@ public class SchemeActivity extends AppCompatActivity {
             nextLoad.setVisibility(View.GONE);apply.setText("");
             scaleX(apply,85,300,new OvershootInterpolator());
             new Handler().postDelayed(new Runnable()
-            {@Override public void run() {apply.setText("");}},300);
+            {@Override public void run() {apply.setText(getString(R.string.apply));}},300);
         }
     }
     public void scaleX(final View view,int x,int t, Interpolator interpolator)
