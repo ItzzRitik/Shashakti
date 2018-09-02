@@ -121,17 +121,6 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-        email.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                newPageAnim();
-                new Handler().postDelayed(new Runnable() {@Override public void run() {
-                    LoginActivity.this.startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
-                    finish();
-                    LoginActivity.this.overridePendingTransition(0, 0);}},1000);
-                return false;
-            }
-        });
 
         pass=findViewById(R.id.pass);
         pass.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
