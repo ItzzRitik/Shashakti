@@ -37,7 +37,7 @@ public class SchemeActivity extends AppCompatActivity {
 
     RelativeLayout splash_cover;
     ImageView back;
-    TextView head;
+    TextView head,details;
     OkHttpClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,10 @@ public class SchemeActivity extends AppCompatActivity {
         head=findViewById(R.id.head);
         head.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
         head.setText(getIntent().getStringExtra("name"));
+
+        details=findViewById(R.id.details);
+        details.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
+        details.setText(getIntent().getStringExtra("details"));
 
         client = new OkHttpClient();
         splash_cover.setVisibility(View.VISIBLE);
