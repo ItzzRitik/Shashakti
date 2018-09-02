@@ -17,6 +17,7 @@
     <string name="interest">Select Your Interests</string>
     <string name="interest_done">Done</string>
     <string name="apply">apply</string>
+    <string name="scheme">View Scheme</string>
 
     <string name="your_name">Your Name</string>
     <string name="error">Oops! Got an Error</string>
@@ -55,5 +56,4 @@
     <string name="flash">flash</string>
     <string name="camera_flip">camera_flip</string>
     <string name="i_m_sad">I\'m Sad</string>
-    <string name="scheme">scheme</string>
 </resources>

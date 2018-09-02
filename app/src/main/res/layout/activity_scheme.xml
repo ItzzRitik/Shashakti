@@ -51,12 +51,11 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:id="@+id/back"
-            android:src="@drawable/menu"
+            android:src="@drawable/back"
             android:layout_above="@+id/data_div"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="18dp"
-            android:layout_marginStart="28dp"
-            android:visibility="invisible"/>
+            android:layout_marginStart="28dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +65,6 @@
             android:layout_alignParentStart="true"
             android:layout_marginBottom="15dp"
             android:layout_marginStart="85dp"
-            android:visibility="invisible"
             android:textSize="28sp"
             android:textColor="#fff"/>
     </RelativeLayout>

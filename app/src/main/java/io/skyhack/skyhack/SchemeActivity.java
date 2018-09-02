@@ -3,8 +3,11 @@ package io.skyhack.skyhack;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +18,25 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class SchemeActivity extends AppCompatActivity {
 
     RelativeLayout splash_cover;
     ImageView back;
+    OkHttpClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +45,30 @@ public class SchemeActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         splash_cover=findViewById(R.id.splash_cover);
         back=findViewById(R.id.back);
+        client = new OkHttpClient();
 
         splash_cover.setVisibility(View.VISIBLE);
         back.setVisibility(View.VISIBLE);
+        viewed(getIntent().getStringExtra("name"));
+    }
+    public void viewed(String name){
+        Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/schemeDetail").get()
+                .addHeader("Content-Type", "application/json").build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.i("failure", e.getMessage());
+                call.cancel();
+            }
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                assert response.body() != null;
+                String mMessage = Objects.requireNonNull(response.body()).string();
+                if (response.isSuccessful()){
+                    Log.i("success", mMessage);
+                }
+            }
+        });
     }
     public void scaleX(final View view,int x,int t, Interpolator interpolator)
     {
