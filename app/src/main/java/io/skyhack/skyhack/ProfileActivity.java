@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -41,6 +42,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -59,6 +61,9 @@ import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import fisk.chipcloud.ChipCloud;
@@ -78,7 +83,7 @@ import static android.R.attr.maxWidth;
 public class ProfileActivity extends AppCompatActivity {
     RelativeLayout logo_div,splash_cover,camera_pane,permission_camera,galary,click_pane,profile_menu_cov,interestPage;
     CardView data_div;
-    ImageView dp_cover,ico_splash,done,camera_flip,click,flash;
+    ImageView dp_cover,ico_splash,done,camera_flip,click,flash,dob_chooser;
     Button allow_camera;
     Animation anim;
     TextView page_tag,gender_tag,interest_button;
@@ -363,6 +368,29 @@ public class ProfileActivity extends AppCompatActivity {
                 vibrate(20);
                 ActivityCompat.requestPermissions(ProfileActivity.this,
                         new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        });
+
+        dob_chooser=findViewById(R.id.dob_chooser);
+        dob_chooser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vibrate(20);
+                DatePickerDialog dd = new DatePickerDialog(ProfileActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                try {
+                                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                                    String dateInString = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                                    Date date = formatter.parse(dateInString);
+                                    formatter = new SimpleDateFormat("dd/MM/yyyy");
+                                    dob.setText(formatter.format(date));
+                                } catch (Exception ex) {}
+                            }
+                        }, 2000,  Calendar.getInstance().get(Calendar.MONTH),  Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                dd.show();
             }
         });
 
