@@ -69,7 +69,10 @@ public class SchemeActivity extends AppCompatActivity {
                         .add("email", getIntent().getStringExtra("email"))
                         .add("aadhar", getIntent().getStringExtra("aadhaar"))
                         .add("name", getIntent().getStringExtra("name")).build();
-                Log.i("apply",postBody.toString());
+                Log.i("apply",getIntent().getStringExtra("email"));
+                Log.i("data",postBody.toString());
+                Log.i("data",getIntent().getStringExtra("aadhaar"));
+                Log.i("data",getIntent().getStringExtra("email"));
                 Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/register").post(postBody).build();
                 client.newCall(request).enqueue(new Callback() {
                     @Override

@@ -272,7 +272,7 @@ public class HomeActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 if(Email==null){Email="aditya.aastha@gmail.com";}
-                                if(Aadhaar==null){Email="123456789123";}
+                                if(Aadhaar==null){Aadhaar="123456789123";}
                                 display.setAdapter(new SchemeAdapter(HomeActivity.this,schemes,Email,Aadhaar));
                             }
                         });
