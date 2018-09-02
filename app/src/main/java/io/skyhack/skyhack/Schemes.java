@@ -27,9 +27,4 @@ public class Schemes {
     public void setDetails(String details) {this.details = details;}
     public String getThumbnail() {return thumbnail;}
     public void setThumbnail(String thumbnail) {this.thumbnail = thumbnail;}
-
-    public View.OnClickListener getRequestBtnClickListener() {return requestBtnClickListener;}
-    public void setRequestBtnClickListener(View.OnClickListener requestBtnClickListener) {
-        this.requestBtnClickListener = requestBtnClickListener;
-    }
 }
