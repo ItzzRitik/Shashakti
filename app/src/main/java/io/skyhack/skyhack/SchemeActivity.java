@@ -15,8 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.AnticipateInterpolator;
 import android.view.animation.Interpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +45,7 @@ public class SchemeActivity extends AppCompatActivity {
     RelativeLayout splash_cover;
     ImageView back;
     TextView head,details,apply;
+    ProgressBar nextLoad;
     OkHttpClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class SchemeActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         splash_cover=findViewById(R.id.splash_cover);
         back=findViewById(R.id.back);
-
+        nextLoad=findViewById(R.id.nextLoad);
         head=findViewById(R.id.head);
         head.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2_bold.otf"));
         head.setText(getIntent().getStringExtra("name"));
@@ -114,6 +118,26 @@ public class SchemeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void nextLoading(Boolean loading)
+    {
+        if(loading)
+        {
+            apply.setText("");
+            scaleX(apply,30,150,new AnticipateInterpolator());
+            apply.setBackgroundResource(R.drawable.signin_disabled);
+            apply.setTextColor(Color.parseColor("#616161"));
+            new Handler().postDelayed(new Runnable() {@Override public void run() {
+                nextLoad.setVisibility(View.VISIBLE);apply.setText("╳");
+            }},150);
+        }
+        else
+        {
+            nextLoad.setVisibility(View.GONE);apply.setText("");
+            scaleX(apply,85,300,new OvershootInterpolator());
+            new Handler().postDelayed(new Runnable()
+            {@Override public void run() {apply.setText("");}},300);
+        }
     }
     public void scaleX(final View view,int x,int t, Interpolator interpolator)
     {
