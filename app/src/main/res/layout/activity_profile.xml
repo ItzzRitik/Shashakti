@@ -57,7 +57,7 @@
                     android:layout_alignParentTop="true"
                     android:id="@+id/dp_cover"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/me"/>
+                    android:src="@drawable/user2"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -88,7 +88,7 @@
                             android:layout_height="120dp"
                             android:id="@+id/profile"
                             android:layout_centerInParent="true"
-                            android:src="@mipmap/me"
+                            android:src="@mipmap/back"
                             app:civ_border_width="0dp"
                             app:civ_shadow="false"/>
                     </RelativeLayout>
