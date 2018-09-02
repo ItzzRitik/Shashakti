@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHolder> {
     private List<Schemes> schemes;
+    String email="",aadhaar="";
     private HomeActivity homeActivity;
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title,last_date,views;
@@ -41,9 +42,11 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
             cardItem = view.findViewById(R.id.cardItem);
         }
     }
-    SchemeAdapter(HomeActivity homeActivity,List<Schemes> schemes) {
+    SchemeAdapter(HomeActivity homeActivity,List<Schemes> schemes,String email,String aadhaar) {
         this.schemes = schemes;
         this.homeActivity = homeActivity;
+        this.email=email;
+        this.aadhaar=aadhaar;
     }
     @NonNull
     @Override
@@ -63,8 +66,9 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 Intent home=new Intent(homeActivity,SchemeActivity.class);
-                home.putExtra("email",homeActivity.getIntent().getStringExtra("email"));
-                home.putExtra("aadhaar",homeActivity.getIntent().getStringExtra("aadhaar"));
+                Log.i("email",email);
+                home.putExtra("email",email);
+                home.putExtra("aadhaar",aadhaar);
                 home.putExtra("name",scheme.getTitle());
                 home.putExtra("date",scheme.getDate());
                 home.putExtra("days",daysLeft(scheme.getDate()));

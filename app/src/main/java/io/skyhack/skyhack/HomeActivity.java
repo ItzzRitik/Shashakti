@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
     double diagonal;
     OkHttpClient client;
     SwipeRefreshLayout refresh;
+    String Email="",Aadhaar="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,8 @@ public class HomeActivity extends AppCompatActivity {
         data_div=findViewById(R.id.data_div);
         toolTip = new ToolTipsManager();
         client = new OkHttpClient();
+        Email=getIntent().getStringExtra("email");
+        Aadhaar=getIntent().getStringExtra("aadhaar");
 
         page_tag=findViewById(R.id.page_tag);
         page_tag.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
@@ -268,7 +271,7 @@ public class HomeActivity extends AppCompatActivity {
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
-                                display.setAdapter(new SchemeAdapter(HomeActivity.this,schemes));
+                                display.setAdapter(new SchemeAdapter(HomeActivity.this,schemes,Email,Aadhaar));
                             }
                         });
                     }

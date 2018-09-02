@@ -62,7 +62,7 @@ public class SchemeActivity extends AppCompatActivity {
 
         apply=findViewById(R.id.apply);
         apply.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
-        details.setOnClickListener(new View.OnClickListener() {
+        apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RequestBody postBody = new FormBody.Builder()
@@ -79,12 +79,11 @@ public class SchemeActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        assert response.body() != null;
-                        if(Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful()){
-                            Log.i("apply","Application Successful - "+(response.body()).string());
+                        if(response.isSuccessful()){
+                            Log.i("apply","Application Successful - "+(Objects.requireNonNull(response.body())).string());
                         }
                         else {
-                            Log.i("apply","Application Failed - "+(response.body()).string());
+                            Log.i("apply","Application Failed - "+(Objects.requireNonNull(response.body())).string());
                         }
                     }
                 });
@@ -93,7 +92,6 @@ public class SchemeActivity extends AppCompatActivity {
 
         client = new OkHttpClient();
         splash_cover.setVisibility(View.VISIBLE);
-        back.setVisibility(View.VISIBLE);
         viewed(getIntent().getStringExtra("name"));
     }
     public void viewed(String name){
