@@ -48,6 +48,12 @@ public class SchemeActivity extends AppCompatActivity {
     ProgressBar nextLoad;
     OkHttpClient client;
     @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.fade_in,0);
+
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheme);
@@ -106,6 +112,14 @@ public class SchemeActivity extends AppCompatActivity {
             }
         });
 
+        back=findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.fade_in,0);
+            }
+        });
         client = new OkHttpClient();
         splash_cover.setVisibility(View.VISIBLE);
         viewed(getIntent().getStringExtra("name"));
