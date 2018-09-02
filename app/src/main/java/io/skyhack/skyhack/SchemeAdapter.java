@@ -27,9 +27,11 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
             super(view);
             title = view.findViewById(R.id.title);
             title.setTypeface(Typeface.createFromAsset(homeActivity.getAssets(), "fonts/exo2.ttf"));
-            thumbnail = view.findViewById(R.id.thumbnail);
-            last_date = view.findViewById(R.id.desc);
+            views = view.findViewById(R.id.views);
+            views.setTypeface(Typeface.createFromAsset(homeActivity.getAssets(), "fonts/exo2.ttf"));
+            last_date = view.findViewById(R.id.date);
             last_date.setTypeface(Typeface.createFromAsset(homeActivity.getAssets(), "fonts/exo2.ttf"));
+            thumbnail = view.findViewById(R.id.thumbnail);
         }
     }
     SchemeAdapter(HomeActivity homeActivity,List<Schemes> schemes) {
