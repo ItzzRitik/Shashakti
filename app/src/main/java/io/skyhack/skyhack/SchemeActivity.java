@@ -84,7 +84,13 @@ public class SchemeActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        nextLoading(false);
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                nextLoading(false);
+                            }
+                        });
+
                         if(response.isSuccessful()){
                             Log.i("apply","Application Successful - "+(Objects.requireNonNull(response.body())).string());
                         }
@@ -126,7 +132,7 @@ public class SchemeActivity extends AppCompatActivity {
         if(loading)
         {
             apply.setText("");
-            scaleX(apply,30,150,new AnticipateInterpolator());
+            scaleX(apply,35,150,new AnticipateInterpolator());
             apply.setBackgroundResource(R.drawable.signin_disabled);
             apply.setTextColor(Color.parseColor("#616161"));
             new Handler().postDelayed(new Runnable() {@Override public void run() {
@@ -136,7 +142,7 @@ public class SchemeActivity extends AppCompatActivity {
         else
         {
             nextLoad.setVisibility(View.GONE);apply.setText("");
-            scaleX(apply,85,300,new OvershootInterpolator());
+            scaleX(apply,120,300,new OvershootInterpolator());
             new Handler().postDelayed(new Runnable()
             {@Override public void run() {apply.setText(getString(R.string.apply));}},300);
         }
