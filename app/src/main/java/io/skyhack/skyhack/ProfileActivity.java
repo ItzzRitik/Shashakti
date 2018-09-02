@@ -627,7 +627,11 @@ public class ProfileActivity extends AppCompatActivity {
                     if(checkPerm())
                     {
                         permission_camera.setVisibility(View.GONE);
-                        if(!cameraView.isCameraOpened()){cameraView.start();}
+                        cameraView.setVisibility(View.GONE);
+                        cameraView.setVisibility(View.VISIBLE);
+                        if(!cameraView.isCameraOpened()){
+                            cameraView.start();
+                        }
                         new Handler().postDelayed(new Runnable() {@Override public void run()
                         {
                             ToolTip.Builder builder = new ToolTip.Builder(ProfileActivity.this, click,camera_pane, getString(R.string.open_galary), ToolTip.POSITION_ABOVE);
