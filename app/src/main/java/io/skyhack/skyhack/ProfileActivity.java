@@ -627,11 +627,6 @@ public class ProfileActivity extends AppCompatActivity {
                     if(checkPerm())
                     {
                         permission_camera.setVisibility(View.GONE);
-                        cameraView.setVisibility(View.GONE);
-                        cameraView.setVisibility(View.VISIBLE);
-                        if(!cameraView.isCameraOpened()){
-                            cameraView.start();
-                        }
                         new Handler().postDelayed(new Runnable() {@Override public void run()
                         {
                             ToolTip.Builder builder = new ToolTip.Builder(ProfileActivity.this, click,camera_pane, getString(R.string.open_galary), ToolTip.POSITION_ABOVE);
@@ -640,6 +635,11 @@ public class ProfileActivity extends AppCompatActivity {
                             builder.setGravity(ToolTip.GRAVITY_CENTER);
                             builder.setTextSize(15);
                             toolTip.show(builder.build());
+                            cameraView.setVisibility(View.GONE);
+                            cameraView.setVisibility(View.VISIBLE);
+                            if(!cameraView.isCameraOpened()){
+                                cameraView.start();
+                            }
                         }},1300);
                         new Handler().postDelayed(new Runnable() {@Override public void run() {toolTip.findAndDismiss(click);}},4000);
                     }
