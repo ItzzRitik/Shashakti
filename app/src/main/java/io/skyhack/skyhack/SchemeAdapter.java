@@ -75,6 +75,7 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
                 home.putExtra("details",scheme.getDetails());
                 home.putExtra("img",scheme.getThumbnail());
                 homeActivity.startActivity(home);
+                homeActivity.overridePendingTransition(R.anim.fade_in,0);
             }
         });
     }

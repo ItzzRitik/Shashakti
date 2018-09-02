@@ -93,31 +93,15 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:id="@+id/menu"
+            android:id="@+id/back"
             android:src="@drawable/menu"
-            android:layout_above="@+id/data_div"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="18dp"
-            android:layout_marginStart="28dp"/>
+            android:layout_alignParentTop="true" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/page_tag"
-            android:text="@string/home"
-            android:layout_above="@+id/data_div"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="85dp"
+            android:text="@string/scheme"
             android:textSize="28sp"
-            android:textColor="#fff"/>
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:id="@+id/search"
-            android:layout_above="@+id/data_div"
-            android:src="@drawable/search"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="30dp"/>
+            android:textColor="#fff"
+            android:layout_alignParentTop="true" />
     </RelativeLayout>
 </RelativeLayout>
