@@ -2,6 +2,7 @@ package io.skyhack.skyhack;
 
 import android.animation.ValueAnimator;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -46,10 +47,12 @@ public class SchemeActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         splash_cover=findViewById(R.id.splash_cover);
         back=findViewById(R.id.back);
-        head=findViewById(R.id.head);
-        head.setText(getIntent().getStringExtra("name"));
-        client = new OkHttpClient();
 
+        head=findViewById(R.id.head);
+        head.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
+        head.setText(getIntent().getStringExtra("name"));
+
+        client = new OkHttpClient();
         splash_cover.setVisibility(View.VISIBLE);
         back.setVisibility(View.VISIBLE);
         viewed(getIntent().getStringExtra("name"));
