@@ -36,6 +36,7 @@ public class SchemeActivity extends AppCompatActivity {
 
     RelativeLayout splash_cover;
     ImageView back;
+    TextView head;
     OkHttpClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,8 @@ public class SchemeActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         splash_cover=findViewById(R.id.splash_cover);
         back=findViewById(R.id.back);
+        head=findViewById(R.id.head);
+        head.setText(getIntent().getStringExtra("name"));
         client = new OkHttpClient();
 
         splash_cover.setVisibility(View.VISIBLE);
