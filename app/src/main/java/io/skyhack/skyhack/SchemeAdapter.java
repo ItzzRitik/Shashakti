@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,12 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
             last_date.setTypeface(Typeface.createFromAsset(homeActivity.getAssets(), "fonts/exo2.ttf"));
             thumbnail = view.findViewById(R.id.thumbnail);
             cardItem = view.findViewById(R.id.cardItem);
+            cardItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
     }
     SchemeAdapter(HomeActivity homeActivity,List<Schemes> schemes) {
@@ -57,12 +64,6 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
         holder.last_date.setText(daysLeft(scheme.getDate()));
         holder.views.setText(scheme.getViews());
         Picasso.get().load(scheme.getThumbnail()).into(holder.thumbnail);
-        holder.cardItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(homeActivity, "Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
     @Override
     public int getItemCount() {
