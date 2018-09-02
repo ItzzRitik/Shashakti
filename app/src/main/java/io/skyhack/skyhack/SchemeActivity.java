@@ -52,7 +52,9 @@ public class SchemeActivity extends AppCompatActivity {
         viewed(getIntent().getStringExtra("name"));
     }
     public void viewed(String name){
-        Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/schemeDetail").get()
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://nodeexercise-adityabhardwaj.c9users.io/schemeDetail").newBuilder();
+        urlBuilder.addQueryParameter("name",name);
+        Request request = new Request.Builder().url(urlBuilder.build().toString()).get()
                 .addHeader("Content-Type", "application/json").build();
         client.newCall(request).enqueue(new Callback() {
             @Override

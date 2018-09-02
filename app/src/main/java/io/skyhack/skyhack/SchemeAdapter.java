@@ -39,12 +39,6 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
             last_date.setTypeface(Typeface.createFromAsset(homeActivity.getAssets(), "fonts/exo2.ttf"));
             thumbnail = view.findViewById(R.id.thumbnail);
             cardItem = view.findViewById(R.id.cardItem);
-            cardItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
         }
     }
     SchemeAdapter(HomeActivity homeActivity,List<Schemes> schemes) {
@@ -58,12 +52,27 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.MyViewHold
         return new MyViewHolder(itemView);
     }
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
-        Schemes scheme = schemes.get(position);
+    public void onBindViewHolder(@NonNull final MyViewHolder holder,int position) {
+        final Schemes scheme = schemes.get(position);
         holder.title.setText(scheme.getTitle());
         holder.last_date.setText(daysLeft(scheme.getDate()));
         holder.views.setText(scheme.getViews());
         Picasso.get().load(scheme.getThumbnail()).into(holder.thumbnail);
+
+        holder.cardItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent home=new Intent(homeActivity,SchemeActivity.class);
+                home.putExtra("email",homeActivity.getIntent().getStringExtra("email"));
+                home.putExtra("aadhaar",homeActivity.getIntent().getStringExtra("aadhaar"));
+                home.putExtra("name",scheme.getTitle());
+                home.putExtra("date",scheme.getDate());
+                home.putExtra("days",daysLeft(scheme.getDate()));
+                home.putExtra("details",scheme.getDetails());
+                home.putExtra("img",scheme.getThumbnail());
+                homeActivity.startActivity(home);
+            }
+        });
     }
     @Override
     public int getItemCount() {
