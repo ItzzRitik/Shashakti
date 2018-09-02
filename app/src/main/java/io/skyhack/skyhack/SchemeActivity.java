@@ -49,7 +49,7 @@ public class SchemeActivity extends AppCompatActivity {
         back=findViewById(R.id.back);
 
         head=findViewById(R.id.head);
-        head.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
+        head.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2_bold.otf"));
         head.setText(getIntent().getStringExtra("name"));
 
         details=findViewById(R.id.details);
