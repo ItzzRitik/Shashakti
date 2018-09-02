@@ -1,6 +1,7 @@
 package io.skyhack.skyhack;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,16 +30,18 @@ import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class SchemeActivity extends AppCompatActivity {
 
     RelativeLayout splash_cover;
     ImageView back;
-    TextView head,details;
+    TextView head,details,apply;
     OkHttpClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,37 @@ public class SchemeActivity extends AppCompatActivity {
         details=findViewById(R.id.details);
         details.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
         details.setText(getIntent().getStringExtra("details"));
+
+        apply=findViewById(R.id.apply);
+        apply.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/exo2.ttf"));
+        details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestBody postBody = new FormBody.Builder()
+                        .add("email", getIntent().getStringExtra("email"))
+                        .add("aadhar", getIntent().getStringExtra("aadhaar"))
+                        .add("name", getIntent().getStringExtra("name")).build();
+                Log.i("apply",postBody.toString());
+                Request request = new Request.Builder().url("https://nodeexercise-adityabhardwaj.c9users.io/register").post(postBody).build();
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        Log.i("sign", e.getMessage());
+                        call.cancel();
+                    }
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                        assert response.body() != null;
+                        if(Integer.parseInt(Objects.requireNonNull(response.body()).string())==1 && response.isSuccessful()){
+                            Log.i("apply","Application Successful - "+(response.body()).string());
+                        }
+                        else {
+                            Log.i("apply","Application Failed - "+(response.body()).string());
+                        }
+                    }
+                });
+            }
+        });
 
         client = new OkHttpClient();
         splash_cover.setVisibility(View.VISIBLE);
