@@ -2,7 +2,7 @@
     <string name="app_name">Shashakti</string>
     <string name="login_create">CREATE ACCOUNT</string>
     <string name="forgot_pass">Forgot Password ?</string>
-    <string name="email">Enter your email</string>
+    <string name="email">Email or Username</string>
     <string name="pass">Password</string>
     <string name="con_pass">Confirm Password</string>
     <string name="or">OR</string>
