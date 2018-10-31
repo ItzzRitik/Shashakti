@@ -47,6 +47,7 @@ public class SchemeActivity extends AppCompatActivity {
     TextView head,details,apply;
     ProgressBar nextLoad;
     OkHttpClient client;
+    boolean applied=false;
     @Override
     public void onBackPressed() {
         finish();
@@ -76,6 +77,19 @@ public class SchemeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 nextLoading(true);
+                if(applied){
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            nextLoading(false);
+                            apply.setBackground(getDrawable(R.drawable.signin));
+                            apply.setTextColor(getResources().getColor(R.color.colorAccent));
+                            apply.setText("Apply");
+                            applied=false;
+                        }},800);
+                    return;
+                }
+
                 RequestBody postBody = new FormBody.Builder()
                         .add("email", getIntent().getStringExtra("email"))
                         .add("aadhar", getIntent().getStringExtra("aadhaar"))
@@ -100,6 +114,16 @@ public class SchemeActivity extends AppCompatActivity {
                                         @Override
                                         public void run() {
                                             nextLoading(false);
+                                            new Handler().postDelayed(new Runnable()
+                                            {@Override public void run() {apply.setText("Done");}},150);
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    apply.setBackground(getDrawable(R.drawable.cancel));
+                                                    apply.setTextColor(Color.parseColor("#ff0000"));
+                                                    apply.setText("Cancel");
+                                                    applied=true;
+                                                }},800);
                                         }},800);
                                 }
                             });
@@ -163,8 +187,6 @@ public class SchemeActivity extends AppCompatActivity {
             scaleX(apply,120,300,new OvershootInterpolator());
             apply.setBackgroundResource(R.drawable.signin_pressed);
             apply.setTextColor(Color.parseColor("#ffffff"));
-            new Handler().postDelayed(new Runnable()
-            {@Override public void run() {apply.setText("Done");}},150);
         }
     }
     public void scaleX(final View view,int x,int t, Interpolator interpolator)
