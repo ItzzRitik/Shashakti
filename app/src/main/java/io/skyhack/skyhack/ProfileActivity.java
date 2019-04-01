@@ -478,6 +478,10 @@ public class ProfileActivity extends AppCompatActivity {
             }},1500);
     }
     public void createProfile(){
+        if(aadhaar.getText().toString().length()!=12){
+            Toast.makeText(this, "Invalid Aadhaar", Toast.LENGTH_SHORT).show();
+            return;
+        }
         int tag=0;
         FormBody.Builder postBody = new FormBody.Builder()
                 .add("email", getIntent().getStringExtra("email")+"")
